@@ -1,0 +1,4 @@
+rootProject.name = 'RELEX_test_assignment'
+include 'db'
+include 'rest'
+include 'service'
