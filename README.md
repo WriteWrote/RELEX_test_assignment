@@ -31,8 +31,19 @@
 
 **API:**
 - [ ] User
-  - [ ] 
+  - [ ] registrate
+  - [ ] \*log in
+  - [ ] \*log out
+  - [ ] cash/check
+  - [ ] cash/in
+  - [ ] cash/out
+  - [ ] cash/exchange
+  - [ ] cash/rate
 - [ ] Admin
+  - [ ] cash/rate
+  - [ ] cash/rate/modify
+  - [ ] cash/total
+  - [ ] transaction/total
 
 **Дополнительно:**
 - [ ] Swagger
