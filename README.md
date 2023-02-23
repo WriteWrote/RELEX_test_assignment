@@ -59,6 +59,8 @@
 - [ ] сервис по запросу может возвращать данные в json ИЛИ xml.
 - [ ] формат может быть изменен добавлением header
 
-### Видеопрезентация: [Mock link](https://www.youtube.com/watch?v=oHg5SJYRHA0)
+## Видеопрезентация: [Mock link](https://www.youtube.com/watch?v=oHg5SJYRHA0)
+***
+## Структура БД
 
 
