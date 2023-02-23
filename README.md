@@ -6,6 +6,7 @@
 ### Обязательные требования:
 * Spring Boot;
 * возвращаемые данные в формате Json;
+* хранилище данных.
 
 **Роли:**
 - [ ] пользователь
@@ -23,5 +24,24 @@
 
 `Доп.: подключение Spring Security`
 
+**Хранилище:**
+- [ ] .txt
+  *или*
+- [ ] PostgresSQL
+
+**API:**
+- [ ] User
+  - [ ] 
+- [ ] Admin
+
+**Дополнительно:**
+- [ ] Swagger
+- [ ] Spring Security
+- [ ] accept:application/json или accept:application/xml к HTTP-запросу
+- [ ] верификация письмом
+- [ ] сервис по запросу может возвращать данные в json ИЛИ xml.
+- [ ] формат может быть изменен добавлением header
+
+**Видеопрезентация:** [Mock link](https://www.youtube.com/watch?v=oHg5SJYRHA0)
 
 
