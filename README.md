@@ -62,5 +62,5 @@
 ## Видеопрезентация: [Mock link](https://www.youtube.com/watch?v=oHg5SJYRHA0)
 ***
 ## Структура БД
-
+![TAR2023BD drawio](https://user-images.githubusercontent.com/45429218/221036227-52434727-ae75-4bed-a3da-4053c7eec40d.png)
 
