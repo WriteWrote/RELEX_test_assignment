@@ -30,10 +30,10 @@ public class UserEntity {
     @Size(min = 8, max=50, message = "password must be from 8 t 50 characters")
     private String password;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<WalletEntity> wallets;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<TransactionEntity> transactionsHistory;
 
     public Integer getId() {

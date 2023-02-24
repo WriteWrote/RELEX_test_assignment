@@ -15,9 +15,12 @@ public class TransactionEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "user_id")
-    @NotEmpty(message = "userId in transactionEntity must not be empty")
-    private Integer userId;
+    @NotEmpty(message = "user in transactionEntity must not be empty")
+    @ManyToOne()
+    @JoinColumn(name = "user_id",
+    referencedColumnName = "id",
+    nullable = false)
+    private UserEntity user;
 
     @Column(name = "currency_id")
     @NotEmpty(message = "currencyId in TransactionEntity must not be empty")
@@ -35,12 +38,12 @@ public class TransactionEntity {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Integer getCurrencyId() {
