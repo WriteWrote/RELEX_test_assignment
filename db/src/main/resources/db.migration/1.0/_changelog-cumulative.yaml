@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: TAR-001-240220231000
+      author: Ellina Obukhova
+      comment: Create Initial DB Structure
+#      runOnChange: true
+      changes:
+        - sqlFile:
+            path: TAR-001-240220231000.sql
+            relativeToChangelogFile: true

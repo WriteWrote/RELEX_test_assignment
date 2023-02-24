@@ -1,0 +1,7 @@
+-- ALTER TABLE tar2023_crypto.currency
+--     RENAME TO currencies;
+--
+-- ALTER TABLE tar2023_crypto.exchange_rates
+--     RENAME COLUMN currency1 TO currency_id1;
+-- ALTER TABLE tar2023_crypto.exchange_rates
+--     RENAME COLUMN currency2 to currency_id2;
