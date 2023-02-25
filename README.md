@@ -27,7 +27,7 @@
 **Хранилище:**
 - [ ] .txt
   *или*
-- [ ] PostgresSQL
+- [x] PostgresSQL
 
 **API:**
 - [ ] User
