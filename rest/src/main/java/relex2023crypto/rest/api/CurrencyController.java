@@ -24,6 +24,9 @@ public class CurrencyController {
         return service.createCurrensy(requestingUserId, dto);
     }
 
-    @DeleteMapping("/delete")
-    public CurrencyDto deleteCurrency()
+    @DeleteMapping("/delete/{currencyId}")
+    public CurrencyDto deleteCurrency(@PathVariable Integer requestingUserId,
+                                      @PathVariable Integer currencyId){
+        return service.deleteCurrencyById(requestingUserId, currencyId);
+    }
 }
