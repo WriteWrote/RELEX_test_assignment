@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
-@ComponentScan(basePackages = {
-        "relex2023crypto.service"
-})
 @EnableAspectJAutoProxy
 public class ServiceConfiguration {
 }
