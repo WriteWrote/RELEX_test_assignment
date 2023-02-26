@@ -8,6 +8,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface IUserMapper {
+    //todo: unmapped target properties:
+    //"id, login, secretKey, password, wallets, transactionsHistory"
+    // for toEntity()
+    //Todo: all mappers.toEntity() has unmapped target properties
     UserDto fromEntity(UserEntity entity);
 
     UserEntity toEntity(UserDto dto);

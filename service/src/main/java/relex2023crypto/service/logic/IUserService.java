@@ -7,7 +7,7 @@ import java.util.List;
 public interface IUserService {
     UserDto createAdmin(Integer requestingUserId, UserDto dto);
 
-    UserDto deleteAdmin(Integer requestingUserId, Integer adminId);
+    void deleteAdmin(Integer requestingUserId, Integer adminId);
 
     List<UserDto> getAllAdmins(Integer requestingUserId);
 

@@ -10,6 +10,6 @@ public interface ICurrencyService {
 
     CurrencyDto createCurrency(Integer requestingUserId, @Validated CurrencyDto dto);
 
-    CurrencyDto deleteCurrencyById(Integer requestingUserId, Integer currencyId);
+    void deleteCurrencyById(Integer requestingUserId, Integer currencyId);
 
 }

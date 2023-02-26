@@ -27,9 +27,9 @@ public class AdminController {
 
     //Todo: create message responce here
     @DeleteMapping("/delete/{adminId}")
-    public UserDto deleteAdmin(@PathVariable Integer requestingUserId,
+    public void deleteAdmin(@PathVariable Integer requestingUserId,
                             @PathVariable Integer adminId){
-        return service.deleteAdmin(requestingUserId, adminId);
+        service.deleteAdmin(requestingUserId, adminId);
     }
 
     @GetMapping("/all")

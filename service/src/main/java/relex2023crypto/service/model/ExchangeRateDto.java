@@ -8,8 +8,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
 @RequiredArgsConstructor
 public class ExchangeRateDto {
     @JsonProperty("currency1")
@@ -23,4 +21,28 @@ public class ExchangeRateDto {
     @JsonProperty("coef")
     @NotNull
     private Double coef;
+
+    public Integer getCurrency_id1() {
+        return currency_id1;
+    }
+
+    public Integer getCurrency_id2() {
+        return currency_id2;
+    }
+
+    public void setCurrency_id2(Integer currency_id2) {
+        this.currency_id2 = currency_id2;
+    }
+
+    public Double getCoef() {
+        return coef;
+    }
+
+    public void setCoef(Double coef) {
+        this.coef = coef;
+    }
+
+    public void setCurrency_id1(Integer currency_id1) {
+        this.currency_id1 = currency_id1;
+    }
 }

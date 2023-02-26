@@ -9,8 +9,6 @@ import lombok.Setter;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
 @RequiredArgsConstructor
 public class TransactionDto {
     @JsonProperty("id")
@@ -28,4 +26,36 @@ public class TransactionDto {
     @JsonProperty("sum")
     @NotNull
     private Double sum;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(Integer currencyId) {
+        this.currencyId = currencyId;
+    }
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
+    }
 }

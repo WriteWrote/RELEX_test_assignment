@@ -30,8 +30,8 @@ public class CurrencyController {
     }
 
     @DeleteMapping("/delete/{currencyId}")
-    public CurrencyDto deleteCurrency(@PathVariable Integer requestingUserId,
+    public void deleteCurrency(@PathVariable Integer requestingUserId,
                                       @PathVariable Integer currencyId){
-        return service.deleteCurrencyById(requestingUserId, currencyId);
+        service.deleteCurrencyById(requestingUserId, currencyId);
     }
 }

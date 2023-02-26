@@ -7,4 +7,5 @@ import relex2023crypto.db.entities.UserEntity;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Integer>, JpaRepository<UserEntity, Integer> {
+
 }
