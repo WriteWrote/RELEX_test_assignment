@@ -15,13 +15,13 @@ public class CurrencyController {
 
     @GetMapping("/all")
     public List<CurrencyDto> getAllCurrencies(){
-        return service.getAllCurrencies();
+        return service.getAll();
     }
 
     @PostMapping("/create")
     public CurrencyDto createCurrency(@PathVariable Integer requestingUserId,
                                       @RequestBody CurrencyDto dto){
-        return service.createCurrensy(requestingUserId, dto);
+        return service.createCurrency(requestingUserId, dto);
     }
 
     @DeleteMapping("/delete/{currencyId}")

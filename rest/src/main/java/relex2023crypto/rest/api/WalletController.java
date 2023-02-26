@@ -9,28 +9,28 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users/{requestingUserId}/cash")
-public class CashController {
+public class WalletController {
     private final IWalletService walletService;
 
     @Autowired
-    public CashController(IWalletService walletService) {
+    public WalletController(IWalletService walletService) {
         this.walletService = walletService;
     }
 
     @GetMapping("/info")
     public List<WalletDto> getUserAllWalletsInfo(@PathVariable Integer requestingUserId){
-        return walletService.getAllUserWallets(requestingUserId);
+        return walletService.getUserWallets(requestingUserId);
     }
 
     @GetMapping("/info/{walletId}")
-    public WalletDto getUserWalletInfoById(@PathVariable Integer requestingUserId,
+    public WalletDto getWalletInfoById(@PathVariable Integer requestingUserId,
                                            @PathVariable Integer walletId){
-        return walletService.getUserWalletById(requestingUserId, walletId);
+        return walletService.getWalletById(requestingUserId, walletId);
     }
 
     @GetMapping("/info/all")
-    public List<WalletDto> getAllWallets(@PathVariable String requestingUserId){
-        return walletService.getAllAvailableWallets(requestingUserId);
+    public List<WalletDto> getAllWallets(@PathVariable Integer requestingUserId){
+        return walletService.getAll(requestingUserId);
     }
 
 

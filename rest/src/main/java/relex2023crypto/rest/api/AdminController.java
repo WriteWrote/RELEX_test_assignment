@@ -22,12 +22,12 @@ public class AdminController {
 
     @PostMapping("/new")
     public UserDto createAdmin(@RequestBody UserDto dto, @PathVariable Integer requestingUserId){
-        return service.createAdmin(dto, requestingUserId);
+        return service.createAdmin(requestingUserId, dto);
     }
 
     //Todo: create message responce here
     @DeleteMapping("/delete/{adminId}")
-    public String deleteAdmin(@PathVariable Integer requestingUserId,
+    public UserDto deleteAdmin(@PathVariable Integer requestingUserId,
                             @PathVariable Integer adminId){
         return service.deleteAdmin(requestingUserId, adminId);
     }

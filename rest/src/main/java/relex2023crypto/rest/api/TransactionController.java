@@ -33,7 +33,7 @@ public class TransactionController {
     @PostMapping("/exchange")
     public WalletDto cashExchange(@PathVariable Integer requestingUserId,
                                   @RequestBody TransactionDto transactionDto){
-        return transactionService.cashExchange(requestingUserId, transactionDto)
+        return transactionService.cashExchange(requestingUserId, transactionDto);
     }
 
     @GetMapping()

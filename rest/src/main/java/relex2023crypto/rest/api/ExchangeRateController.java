@@ -20,18 +20,18 @@ public class ExchangeRateController {
     @GetMapping("{currency1}/{currency2}")
     public ExchangeRateDto getCurrencyExchangeRate(@PathVariable Integer currency1,
                                                    @PathVariable Integer currency2) {
-        return exchangeRateService.getCurrencyExchangeRate(currency1, currency2);
+        return exchangeRateService.getExchangeRateById(currency1, currency2);
     }
 
     @GetMapping("/all")
     public List<ExchangeRateDto> getAllExchangeRates(){
-        return exchangeRateService.getAllExchangeRates();
+        return exchangeRateService.getAll();
     }
 
     @PostMapping("/modify")
     public ExchangeRateDto modifyCurrencyExchangeRate(@PathVariable Integer userId,
                                                       @RequestBody ExchangeRateDto dto){
-        return exchangeRateService.modifyCurrecyExchangeRate(userId, dto);
+        return exchangeRateService.modifyExchangeRateById(userId, dto);
     }
 
 }
