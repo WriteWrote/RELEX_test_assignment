@@ -31,7 +31,7 @@ public class ExchangeRateController {
     @PostMapping("/modify")
     public ExchangeRateDto modifyCurrencyExchangeRate(@PathVariable Integer userId,
                                                       @RequestBody ExchangeRateDto dto){
-        return exchangeRateService.modifyCrrecnyExchangeRate(userId, dto);
+        return exchangeRateService.modifyCurrecyExchangeRate(userId, dto);
     }
 
 }

@@ -1,11 +1,9 @@
 package relex2023crypto.rest.api;
 
 import relex2023crypto.service.logic.IUserService;
-import relex2023crypto.service.logic.impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import relex2023crypto.service.logic.impl.UserServiceImpl;
 import relex2023crypto.service.model.UserDto;
 
 import java.util.List;

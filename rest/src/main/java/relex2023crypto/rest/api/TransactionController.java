@@ -9,7 +9,7 @@ import relex2023crypto.service.model.WalletDto;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/{requestingUserId}/cash")
+@RequestMapping("users/{requestingUserId}/cash/transactions")
 public class TransactionController {
     private final ITransactionService transactionService;
 
@@ -36,12 +36,12 @@ public class TransactionController {
         return transactionService.cashExchange(requestingUserId, transactionDto)
     }
 
-    @GetMapping("/transactions")
+    @GetMapping()
     public List<TransactionDto> getUserTransactionHistory(@PathVariable Integer requestingUserId){
         return transactionService.getUserTransactionHistory(requestingUserId);
     }
 
-    @GetMapping("/transactions/all")
+    @GetMapping("/all")
     public List<TransactionDto> getAllUsersTransactionHistory(@PathVariable Integer requestingUserId){
         return transactionService.getAllTransactions(requestingUserId);
     }
