@@ -3,6 +3,7 @@ package relex2023crypto.rest.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ITransactionService;
+import relex2023crypto.service.model.ResponseDto;
 import relex2023crypto.service.model.TransactionDto;
 import relex2023crypto.service.model.WalletDto;
 
@@ -19,21 +20,22 @@ public class TransactionController {
     }
 
     @PostMapping("/out")
-    public WalletDto cashOut(@PathVariable Integer requestingUserId,
+    public ResponseDto cashOut(@PathVariable Integer requestingUserId,
                              @RequestBody TransactionDto transactionDto){
         return transactionService.cashOut(requestingUserId, transactionDto);
     }
 
     @PostMapping("/in")
-    public WalletDto cashIn(@PathVariable Integer requestingUserId,
+    public ResponseDto cashIn(@PathVariable Integer requestingUserId,
                             @RequestBody TransactionDto transactionDto){
         return transactionService.cashIn(requestingUserId, transactionDto);
     }
 
     @PostMapping("/exchange")
-    public WalletDto cashExchange(@PathVariable Integer requestingUserId,
-                                  @RequestBody TransactionDto transactionDto){
-        return transactionService.cashExchange(requestingUserId, transactionDto);
+    public ResponseDto cashExchange(@PathVariable Integer requestingUserId,
+                                    @RequestBody TransactionDto exchangeFrom,
+                                    @RequestBody TransactionDto exchangeTo){
+        return transactionService.cashExchange(requestingUserId, exchangeFrom, exchangeTo);
     }
 
     @GetMapping("/{userId}")
