@@ -34,6 +34,10 @@ public class TransactionEntity {
     @NotEmpty(message = "currencySum in TransactionEntity must not be empty")
     private Double currencySum;
 
+    @Column(name = "message")
+    @NotEmpty(message = "additional message in TransactionEntity must not be empty")
+    private String message;
+
     public Integer getId() {
         return id;
     }
@@ -72,5 +76,13 @@ public class TransactionEntity {
 
     public void setWalletId(Integer walletId) {
         this.walletId = walletId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

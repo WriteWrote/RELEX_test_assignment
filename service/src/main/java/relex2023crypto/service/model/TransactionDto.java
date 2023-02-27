@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @RequiredArgsConstructor
@@ -30,6 +31,10 @@ public class TransactionDto {
     @JsonProperty("sum")
     @NotNull
     private Double sum;
+
+    @JsonProperty("message")
+    @NotBlank(message = "message.is-blank")
+    private String message;
 
     public Integer getId() {
         return id;
@@ -66,8 +71,15 @@ public class TransactionDto {
     public Integer getWalletId() {
         return walletId;
     }
-
     public void setWalletId(Integer walletId) {
         this.walletId = walletId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

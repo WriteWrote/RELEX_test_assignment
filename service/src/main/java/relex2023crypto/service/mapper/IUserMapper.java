@@ -15,7 +15,7 @@ public interface IUserMapper {
 
     @Mapping(target = "secretKey", ignore = true)
     @Mapping(target = "password", ignore = true)
-    @Mapping(target = "login", source = "dto.login")
+    @Mapping(target = "login", source = "login")
     @Mapping(target = "wallets", source = "wallets")
     @Mapping(target = "transactionsHistory", source = "transactions")
     UserEntity toEntity(UserDto dto);

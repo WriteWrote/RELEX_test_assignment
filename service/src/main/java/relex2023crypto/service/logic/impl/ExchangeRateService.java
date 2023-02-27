@@ -46,6 +46,7 @@ public class ExchangeRateService implements IExchangeRateService {
     public ExchangeRateDto modifyExchangeRateById(Integer requestingUserId, ExchangeRateDto dto) {
         logger.info("Requested modifying the currency exchange rate ({} - {}) by user {}",
                 dto.getCurrency_id1(), dto.getCurrency_id2(), requestingUserId);
+
         //todo: finish modifying by merge
         return null;
     }

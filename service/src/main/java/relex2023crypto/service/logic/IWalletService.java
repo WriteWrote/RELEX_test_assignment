@@ -11,6 +11,7 @@ public interface IWalletService {
 
     ResponseDto deleteWalletById(Integer requestingUserId,
                                  Integer walletID);
+    ResponseDto createWallet(WalletDto dto);
     List<WalletDto> getUserWallets(Integer userId);
 
     List<WalletDto> getAll(Integer requestingUserId);

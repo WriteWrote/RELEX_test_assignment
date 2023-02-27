@@ -1,6 +1,5 @@
 package relex2023crypto.service.logic.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,15 @@ public class WalletService implements IWalletService {
                 walletID, requestingUserId, "access");
         rep.deleteById(walletID);
         return new ResponseDto("Wallet {} was successfully deleted", walletID);
+    }
+
+    @Override
+    public ResponseDto createWallet(WalletDto dto) {
+        logger.info("Requested creation of wallet {} in currency {} by user {}",
+                dto.getId(), dto.getCurrencyId(), dto.getUserId());
+        rep.save(map.toEntity(dto));
+        return new ResponseDto("Wallet {} in currency {} by user {} was created successfully",
+                dto.getId(), dto.getCurrencyId(), dto.getUserId());
     }
 
     @Override

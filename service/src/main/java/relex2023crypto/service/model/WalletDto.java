@@ -23,7 +23,7 @@ public class WalletDto {
 
     @JsonProperty("sum")
     @NotNull
-    private Integer sum;
+    private Double sum;
 
     public Integer getId() {
         return id;
@@ -49,11 +49,11 @@ public class WalletDto {
         this.currencyId = currencyId;
     }
 
-    public Integer getSum() {
+    public Double getSum() {
         return sum;
     }
 
-    public void setSum(Integer sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 }
