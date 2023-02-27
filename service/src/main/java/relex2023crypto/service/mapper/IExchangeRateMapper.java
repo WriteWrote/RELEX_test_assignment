@@ -2,6 +2,7 @@ package relex2023crypto.service.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import relex2023crypto.db.entities.ExchangeRateEntity;
 import relex2023crypto.service.model.ExchangeRateDto;
 
@@ -19,4 +20,7 @@ public interface IExchangeRateMapper {
     ExchangeRateEntity toEntity(ExchangeRateDto dto);
 
     List<ExchangeRateDto> fromEntities(Iterable<ExchangeRateEntity> entities);
+    @Mapping(target = "currency1", source = "currency_id1")
+    @Mapping(target = "currency2", source = "currency_id2")
+    ExchangeRateEntity merge(ExchangeRateDto dto, @MappingTarget ExchangeRateEntity entity);
 }

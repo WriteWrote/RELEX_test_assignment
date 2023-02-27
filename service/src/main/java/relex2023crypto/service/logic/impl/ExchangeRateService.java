@@ -1,12 +1,13 @@
 package relex2023crypto.service.logic.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import relex2023crypto.db.entities.ExchangeRateEntity;
 import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.service.logic.IExchangeRateService;
+import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.IExchangeRateMapper;
 import relex2023crypto.service.model.ExchangeRateDto;
 
@@ -16,11 +17,13 @@ import java.util.Optional;
 @Service
 public class ExchangeRateService implements IExchangeRateService {
     private static final Logger logger = LoggerFactory.getLogger(ExchangeRateService.class);
+    private final AccessProvider provider;
     private final ExchangeRateRepository rep;
     private final IExchangeRateMapper map;
 
     @Autowired
-    public ExchangeRateService(ExchangeRateRepository rep, IExchangeRateMapper map) {
+    public ExchangeRateService(AccessProvider provider, ExchangeRateRepository rep, IExchangeRateMapper map) {
+        this.provider = provider;
         this.rep = rep;
         this.map = map;
     }
@@ -44,10 +47,16 @@ public class ExchangeRateService implements IExchangeRateService {
 
     @Override
     public ExchangeRateDto modifyExchangeRateById(Integer requestingUserId, ExchangeRateDto dto) {
-        logger.info("Requested modifying the currency exchange rate ({} - {}) by user {}",
-                dto.getCurrency_id1(), dto.getCurrency_id2(), requestingUserId);
-
-        //todo: finish modifying by merge
-        return null;
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
+        logger.info("Requested modifying the currency exchange rate ({} - {}) by user {}, access: {}",
+                dto.getCurrency_id1(), dto.getCurrency_id2(), requestingUserId, access);
+        if (!access) {
+            return null;
+        }
+        ExchangeRateEntity newEntity = map.merge(dto, rep.findByCurrency1AndCurrency2(dto.getCurrency_id1(),
+                dto.getCurrency_id2()));
+        return Optional.of(rep.save(newEntity))
+                .map(map::fromEntity)
+                .orElseThrow();
     }
 }

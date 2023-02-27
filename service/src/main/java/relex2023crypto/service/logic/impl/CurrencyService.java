@@ -1,12 +1,12 @@
 package relex2023crypto.service.logic.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import relex2023crypto.db.repositories.CurrencyRepository;
 import relex2023crypto.service.logic.ICurrencyService;
+import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.ICurrencyMapper;
 import relex2023crypto.service.model.CurrencyDto;
 import relex2023crypto.service.model.ResponseDto;
@@ -17,11 +17,13 @@ import java.util.Optional;
 @Service
 public class CurrencyService implements ICurrencyService {
     private static final Logger logger = LoggerFactory.getLogger(CurrencyService.class);
+    private final AccessProvider provider;
     private final CurrencyRepository rep;
     private final ICurrencyMapper map;
 
     @Autowired
-    public CurrencyService(CurrencyRepository rep, ICurrencyMapper map) {
+    public CurrencyService(AccessProvider provider, CurrencyRepository rep, ICurrencyMapper map) {
+        this.provider = provider;
         this.rep = rep;
         this.map = map;
     }
@@ -36,9 +38,12 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public CurrencyDto createCurrency(Integer requestingUserId, CurrencyDto dto) {
-//        todo: create an Admin repo and add checkin the requesting user id is in the table of admins
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested creating a new currency by user {}, access: {}",
-                requestingUserId, "access");
+                requestingUserId, access);
+
+        if (!access)
+            return null;
 
         return Optional.of(dto)
                 .map(map::toEntity)
@@ -49,9 +54,14 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public ResponseDto deleteCurrencyById(Integer requestingUserId, Integer currencyId) {
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested deleting currency {} by user {}, access: {}",
-                currencyId, requestingUserId, "access");
+                currencyId, requestingUserId, access);
+        if (!access)
+            return new ResponseDto("Operation denied");
+
         rep.deleteById(currencyId);
+
         return new ResponseDto("Currency {} was successfully deleted", currencyId);
     }
 }

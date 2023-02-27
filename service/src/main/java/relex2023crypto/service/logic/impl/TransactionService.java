@@ -9,6 +9,7 @@ import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.db.repositories.TransactionRepository;
 import relex2023crypto.db.repositories.WalletRepository;
 import relex2023crypto.service.logic.ITransactionService;
+import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.ITransactionMapper;
 import relex2023crypto.service.mapper.IWalletMapper;
 import relex2023crypto.service.model.ResponseDto;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Service
 public class TransactionService implements ITransactionService {
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
+    private final AccessProvider provider;
     private final TransactionRepository transactionRepository;
     private final ITransactionMapper transactionMapper;
     private final WalletRepository walletRepository;
@@ -29,7 +31,13 @@ public class TransactionService implements ITransactionService {
     private final ExchangeRateRepository exchangeRateRepository;
 
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository, WalletRepository walletRepository, ITransactionMapper transactionMapper, IWalletMapper walletMapper, ExchangeRateRepository exchangeRateRepository) {
+    public TransactionService(AccessProvider provider,
+                              TransactionRepository transactionRepository,
+                              WalletRepository walletRepository,
+                              ITransactionMapper transactionMapper,
+                              IWalletMapper walletMapper,
+                              ExchangeRateRepository exchangeRateRepository) {
+        this.provider = provider;
         this.transactionRepository = transactionRepository;
         this.walletRepository = walletRepository;
         this.transactionMapper = transactionMapper;
@@ -57,7 +65,7 @@ public class TransactionService implements ITransactionService {
         return new ResponseDto("Operation succeeded");
     }
 
-    private ResponseDto cashIn(TransactionDto dto){
+    private ResponseDto cashIn(TransactionDto dto) {
         WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(dto.getWalletId()));
 
         logger.info("Operation succeeded");
@@ -77,7 +85,7 @@ public class TransactionService implements ITransactionService {
 
         ResponseDto response = cashOut(dto);
 
-        if (!response.getSuccess()){
+        if (!response.getSuccess()) {
             dto.setMessage("denied");
         }
 
@@ -113,14 +121,14 @@ public class TransactionService implements ITransactionService {
         ResponseDto responseCashOut = cashOut(exchangeFrom);
         ResponseDto responseCashIn = new ResponseDto("suspended");
 
-        if (responseCashOut.getSuccess()){
+        if (responseCashOut.getSuccess()) {
             Double coef = exchangeRateRepository.findByCurrency1AndCurrency2(exchangeFrom.getCurrencyId(),
                             exchangeTo.getCurrencyId())
                     .getCoef();
             Double exchangedSum = exchangeFrom.getSum() * coef;
             exchangeTo.setSum(exchangedSum);
             responseCashIn = cashIn(exchangeTo);
-        }else {
+        } else {
             exchangeFrom.setMessage("denied");
             exchangeTo.setMessage("denied");
         }
@@ -129,13 +137,13 @@ public class TransactionService implements ITransactionService {
         transactionRepository.save(transactionMapper.toEntity(exchangeTo));
 
         return new ResponseDto(responseCashOut.getMessage() + "\n"
-                                + responseCashIn.getMessage());
+                + responseCashIn.getMessage());
     }
 
     @Override
     public List<TransactionDto> getUserTransactionHistory(Integer requestingUserId, Integer userId) {
-        logger.info("Requested user {} transaction history by user {}, access: {}",
-                userId, requestingUserId, "access");
+        logger.info("Requested user {} transaction history by user {}",
+                userId, requestingUserId);
 
         return Optional.of(transactionRepository.findAllByUserId(userId))
                 .map(transactionMapper::fromEntities)
@@ -145,8 +153,13 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public List<TransactionDto> getAllTransactions(Integer requestingUserId) {
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested all transactions by user {}, access: {}",
-                requestingUserId, "access");
+                requestingUserId, access);
+
+        if (!access){
+            return null;
+        }
 
         return Optional.of(transactionRepository.findAll())
                 .map(transactionMapper::fromEntities)
