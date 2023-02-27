@@ -5,13 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import relex2023crypto.db.repositories.AdminRepository;
-import relex2023crypto.db.repositories.UserRepository;
 import relex2023crypto.service.logic.IAdminService;
+import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.IAdminMapper;
-import relex2023crypto.service.mapper.IUserMapper;
 import relex2023crypto.service.model.AdminDto;
 import relex2023crypto.service.model.ResponseDto;
-import relex2023crypto.service.model.UserDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,18 +20,17 @@ public class AdminService implements IAdminService {
     private final AdminRepository rep;
     private final IAdminMapper map;
 
+    private final AccessProvider provider;
+
     @Autowired
-    public AdminService(AdminRepository rep, IAdminMapper map) {
+    public AdminService(AdminRepository rep, IAdminMapper map, AccessProvider provider) {
         this.rep = rep;
         this.map = map;
-    }
-
-    private boolean checkAccess(Integer id){
-        return rep.findAll().contains(id);
+        this.provider = provider;
     }
     @Override
     public AdminDto createAdmin(Integer requestingUserId, AdminDto dto) {
-        Boolean access = checkAccess(requestingUserId);
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested creating new admin by {}, access: {}",
                 requestingUserId, access);
 
@@ -54,7 +51,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public ResponseDto deleteAdmin(Integer requestingUserId, Integer adminId) {
-        Boolean access = checkAccess(requestingUserId);
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested deleting admin {} by user {}, access: {}",
                 adminId, requestingUserId, access);
         if (!access){
@@ -66,7 +63,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public List<AdminDto> getAllAdmins(Integer requestingUserId) {
-        Boolean access = checkAccess(requestingUserId);
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested all admins info by user {}, access: {}",
                 requestingUserId, access);
         if (!access){

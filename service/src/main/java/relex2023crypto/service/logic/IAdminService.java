@@ -12,7 +12,4 @@ public interface IAdminService {
     ResponseDto deleteAdmin(Integer requestingUserId, Integer adminId);
 
     List<AdminDto> getAllAdmins(Integer requestingUserId);
-
-
-
 }
