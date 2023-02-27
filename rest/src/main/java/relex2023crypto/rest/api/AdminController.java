@@ -1,9 +1,10 @@
 package relex2023crypto.rest.api;
 
-import relex2023crypto.service.logic.IUserService;
+import relex2023crypto.service.logic.IAdminService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import relex2023crypto.service.model.AdminDto;
 import relex2023crypto.service.model.ResponseDto;
 import relex2023crypto.service.model.UserDto;
 
@@ -12,17 +13,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/users/{requestingUserId}/admins")
 public class AdminController {
-    private final IUserService service;
+    private final IAdminService service;
 
     @Autowired
-    public AdminController(IUserService service) {
+    public AdminController(IAdminService service) {
         this.service = service;
     }
 
-    //todo: this three controllers should be available onlyfor users w/ admins secret_keys
-
     @PostMapping("/new")
-    public UserDto createAdmin(@RequestBody UserDto dto, @PathVariable Integer requestingUserId){
+    public AdminDto createAdmin(@RequestBody AdminDto dto, @PathVariable Integer requestingUserId){
         return service.createAdmin(requestingUserId, dto);
     }
     @DeleteMapping("/delete/{adminId}")
@@ -32,7 +31,7 @@ public class AdminController {
     }
 
     @GetMapping("/all")
-    public List<UserDto> getAllAdmins(@PathVariable Integer requestingUserId){
+    public List<AdminDto> getAllAdmins(@PathVariable Integer requestingUserId){
         return service.getAllAdmins(requestingUserId);
     }
 
