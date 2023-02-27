@@ -140,6 +140,7 @@ public class TransactionService implements ITransactionService {
         return Optional.of(transactionRepository.findAllByUserId(userId))
                 .map(transactionMapper::fromEntities)
                 .orElseThrow();
+
     }
 
     @Override
