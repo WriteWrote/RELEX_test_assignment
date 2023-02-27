@@ -6,8 +6,25 @@ databaseChangeLog:
       id: TAR-001-240220231000
       author: Ellina Obukhova
       comment: Create Initial DB Structure
-#      runOnChange: true
+      #      runOnChange: true
       changes:
         - sqlFile:
             path: TAR-001-240220231000.sql
+            relativeToChangelogFile: true
+#  - changeSet:
+#      id: TAR-002-240220231100
+#      author: Ellina Obukhova
+#      comment: Create Initial DB Structure
+#      runOnChange: false
+#      changes:
+#        - sqlFile:
+#            path: TAR-002-240220231100.sql
+#            relativeToChangelogFile: true
+  - changeSet:
+      id: TAR-003-270220231530
+      author: Ellina Obukhova
+      comment: Create Initial DB Structure
+      changes:
+        - sqlFile:
+            path: TAR-003-270220231530.sql
             relativeToChangelogFile: true
