@@ -19,6 +19,10 @@ public class TransactionDto {
     @NotNull
     private Integer userId;
 
+    @JsonProperty("wallet_id")
+    @NotNull
+    private Integer walletId;
+
     @JsonProperty("currency_id")
     @NotNull
     private Integer currencyId;
@@ -57,5 +61,13 @@ public class TransactionDto {
 
     public void setSum(Double sum) {
         this.sum = sum;
+    }
+
+    public Integer getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(Integer walletId) {
+        this.walletId = walletId;
     }
 }

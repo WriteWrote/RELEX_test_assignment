@@ -7,6 +7,7 @@ import relex2023crypto.db.entities.WalletEntity;
 import relex2023crypto.service.model.WalletDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface IWalletMapper {

@@ -18,9 +18,13 @@ public class TransactionEntity {
     @NotEmpty(message = "user in transactionEntity must not be empty")
     @ManyToOne()
     @JoinColumn(name = "user_id",
-    referencedColumnName = "id",
-    nullable = false)
+            referencedColumnName = "id",
+            nullable = false)
     private UserEntity user;
+
+    @NotEmpty(message = "Wallet id must not be empty in TransactionEntity")
+    @Column(name = "wallet_id")
+    private Integer walletId;
 
     @Column(name = "currency_id")
     @NotEmpty(message = "currencyId in TransactionEntity must not be empty")
@@ -60,5 +64,13 @@ public class TransactionEntity {
 
     public void setCurrencySum(Double currencySum) {
         this.currencySum = currencySum;
+    }
+
+    public Integer getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(Integer walletId) {
+        this.walletId = walletId;
     }
 }
