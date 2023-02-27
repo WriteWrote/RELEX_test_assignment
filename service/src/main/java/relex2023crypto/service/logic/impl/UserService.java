@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import relex2023crypto.db.repositories.UserRepository;
 import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.mapper.IUserMapper;
+import relex2023crypto.service.model.ResponseDto;
 import relex2023crypto.service.model.UserDto;
 
 import java.util.List;
@@ -36,10 +37,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteAdmin(Integer requestingUserId, Integer adminId) {
+    public ResponseDto deleteAdmin(Integer requestingUserId, Integer adminId) {
         logger.info("Requested deleting admin {} by user {}, access: {}",
                 adminId, requestingUserId, "access");
         rep.deleteById(adminId);
+        return new ResponseDto("Admin {} was successfully deleted", adminId);
     }
 
     @Override

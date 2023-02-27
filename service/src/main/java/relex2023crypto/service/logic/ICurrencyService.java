@@ -2,6 +2,7 @@ package relex2023crypto.service.logic;
 
 import org.springframework.validation.annotation.Validated;
 import relex2023crypto.service.model.CurrencyDto;
+import relex2023crypto.service.model.ResponseDto;
 
 import java.util.List;
 
@@ -10,6 +11,6 @@ public interface ICurrencyService {
 
     CurrencyDto createCurrency(Integer requestingUserId, @Validated CurrencyDto dto);
 
-    void deleteCurrencyById(Integer requestingUserId, Integer currencyId);
+    ResponseDto deleteCurrencyById(Integer requestingUserId, Integer currencyId);
 
 }

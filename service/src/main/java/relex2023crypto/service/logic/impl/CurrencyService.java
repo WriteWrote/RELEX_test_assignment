@@ -9,6 +9,7 @@ import relex2023crypto.db.repositories.CurrencyRepository;
 import relex2023crypto.service.logic.ICurrencyService;
 import relex2023crypto.service.mapper.ICurrencyMapper;
 import relex2023crypto.service.model.CurrencyDto;
+import relex2023crypto.service.model.ResponseDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,10 +48,10 @@ public class CurrencyService implements ICurrencyService {
     }
 
     @Override
-    public void deleteCurrencyById(Integer requestingUserId, Integer currencyId) {
-
-        logger.info("Requested deleting currency (id: {}, name: {}) by user {}, access: {}",
-                currencyId, "name", requestingUserId, "access");
+    public ResponseDto deleteCurrencyById(Integer requestingUserId, Integer currencyId) {
+        logger.info("Requested deleting currency {} by user {}, access: {}",
+                currencyId, requestingUserId, "access");
         rep.deleteById(currencyId);
+        return new ResponseDto("Currency {} was successfully deleted", currencyId);
     }
 }

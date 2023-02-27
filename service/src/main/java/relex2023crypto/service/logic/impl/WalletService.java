@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import relex2023crypto.db.repositories.WalletRepository;
 import relex2023crypto.service.logic.IWalletService;
 import relex2023crypto.service.mapper.IWalletMapper;
+import relex2023crypto.service.model.ResponseDto;
 import relex2023crypto.service.model.WalletDto;
 
 import java.util.List;
@@ -32,6 +33,14 @@ public class WalletService implements IWalletService {
         return rep.findById(walletId)
                 .map(map::fromEntity)
                 .orElseThrow();
+    }
+
+    @Override
+    public ResponseDto deleteWalletById(Integer requestingUserId, Integer walletID) {
+        logger.info("Deleting wallet {} was requested by user {}, access: {}",
+                walletID, requestingUserId, "access");
+        rep.deleteById(walletID);
+        return new ResponseDto("Wallet {} was successfully deleted", walletID);
     }
 
     @Override

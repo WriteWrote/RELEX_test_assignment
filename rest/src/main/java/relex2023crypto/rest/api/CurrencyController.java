@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ICurrencyService;
 import relex2023crypto.service.model.CurrencyDto;
+import relex2023crypto.service.model.ResponseDto;
 
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class CurrencyController {
     }
 
     @DeleteMapping("/delete/{currencyId}")
-    public void deleteCurrency(@PathVariable Integer requestingUserId,
+    public ResponseDto deleteCurrency(@PathVariable Integer requestingUserId,
                                       @PathVariable Integer currencyId){
-        service.deleteCurrencyById(requestingUserId, currencyId);
+        return service.deleteCurrencyById(requestingUserId, currencyId);
     }
 }
