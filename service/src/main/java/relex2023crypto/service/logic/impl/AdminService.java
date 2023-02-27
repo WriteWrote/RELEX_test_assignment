@@ -17,10 +17,9 @@ import java.util.Optional;
 @Service
 public class AdminService implements IAdminService {
     private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
+    private final AccessProvider provider;
     private final AdminRepository rep;
     private final IAdminMapper map;
-
-    private final AccessProvider provider;
 
     @Autowired
     public AdminService(AdminRepository rep, IAdminMapper map, AccessProvider provider) {
