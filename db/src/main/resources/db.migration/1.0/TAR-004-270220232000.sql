@@ -1,0 +1,5 @@
+ALTER TABLE tar2023_crypto.admins ADD COLUMN IF NOT EXISTS
+    id      SERIAL PRIMARY KEY ;
+
+ALTER TABLE tar2023_crypto.admins ADD COLUMN IF NOT EXISTS
+    email       VARCHAR(50) UNIQUE ;

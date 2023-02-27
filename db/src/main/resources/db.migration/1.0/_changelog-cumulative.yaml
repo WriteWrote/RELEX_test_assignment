@@ -6,34 +6,38 @@ databaseChangeLog:
       id: TAR-001-240220231000
       author: Ellina Obukhova
       comment: Create Initial DB Structure
-      #      runOnChange: true
+      runOnChange: true
       changes:
         - sqlFile:
             path: TAR-001-240220231000.sql
             relativeToChangelogFile: true
-#  - changeSet:
-#      id: TAR-002-240220231100
-#      author: Ellina Obukhova
-#      comment: Create Initial DB Structure
-#      runOnChange: false
-#      changes:
-#        - sqlFile:
-#            path: TAR-002-240220231100.sql
-#            relativeToChangelogFile: true
+
   - changeSet:
-      id: TAR-003-270220231530
+      id: TAR-002-270220231530
       author: Ellina Obukhova
       comment: Add column to transactions.table
+      runOnChange: true
       changes:
         - sqlFile:
-            path: TAR-003-270220231530.sql
+            path: TAR-002-270220231530.sql
             relativeToChangelogFile: true
 
   - changeSet:
-      id: TAR-004-270220231600
+      id: TAR-003-270220231600
       author: Ellina Obukhova
       comment: add column to transactional.table
+      runOnChange: true
       changes:
         - sqlFile:
-            path: TAR-004-270220231600.sql
+            path: TAR-003-270220231600.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: TAR-004-270220232000
+      author: Ellina Obukhova
+      comment: add column id to admins.table
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: TAR-004-270220232000.sql
             relativeToChangelogFile: true

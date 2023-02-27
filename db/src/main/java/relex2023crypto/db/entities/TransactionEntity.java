@@ -77,12 +77,4 @@ public class TransactionEntity {
     public void setWalletId(Integer walletId) {
         this.walletId = walletId;
     }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

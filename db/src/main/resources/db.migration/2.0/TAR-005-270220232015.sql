@@ -8,12 +8,14 @@ CREATE TABLE tar2023_crypto.users(
 );
 
 CREATE TABLE tar2023_crypto.admins(
-    secret_key      VARCHAR(100)    UNIQUE
+    id              SERIAL PRIMARY KEY,
+    secret_key      VARCHAR(100)    UNIQUE,
+    email           VARCHAR(50) UNIQUE
 );
 
 CREATE TABLE tar2023_crypto.currencies(
-                                        id              SERIAL PRIMARY KEY ,
-                                        currency_name   VARCHAR(50)
+                                          id              SERIAL PRIMARY KEY ,
+                                          currency_name   VARCHAR(50)
 );
 
 CREATE TABLE tar2023_crypto.wallets(
@@ -27,7 +29,9 @@ CREATE TABLE tar2023_crypto.transactions(
                                             id              SERIAL PRIMARY KEY ,
                                             user_id         INTEGER NOT NULL ,
                                             currency_id     INTEGER NOT NULL ,
-                                            currency_sum    FLOAT NOT NULL
+                                            currency_sum    FLOAT NOT NULL,
+                                            wallet_id       INTEGER,
+                                            message         VARCHAR(15)
 );
 
 CREATE TABLE tar2023_crypto.exchange_rates(
