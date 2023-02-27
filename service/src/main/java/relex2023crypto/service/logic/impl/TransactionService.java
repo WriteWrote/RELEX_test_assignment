@@ -1,6 +1,5 @@
 package relex2023crypto.service.logic.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import relex2023crypto.service.model.TransactionDto;
 import relex2023crypto.service.model.WalletDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService implements ITransactionService {
@@ -45,17 +45,22 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public List<TransactionDto> getUserTransactionHistory(Integer requestingUserId) {
+    public List<TransactionDto> getUserTransactionHistory(Integer requestingUserId, Integer userId) {
         logger.info("Requested user {} transaction history by user {}, access: {}",
-                requestingUserId, "user", "access");
-        //todo: add userid in the path and as parameter
-        return null;
+                userId, requestingUserId, "access");
+
+        return Optional.of(rep.findAllByUserId(userId))
+                .map(map::fromEntities)
+                .orElseThrow();
     }
 
     @Override
     public List<TransactionDto> getAllTransactions(Integer requestingUserId) {
         logger.info("Requested all transactions by user {}, access: {}",
                 requestingUserId, "access");
-        return null;
+
+        return Optional.of(rep.findAll())
+                .map(map::fromEntities)
+                .orElseThrow();
     }
 }

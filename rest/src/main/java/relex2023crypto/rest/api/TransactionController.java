@@ -36,9 +36,10 @@ public class TransactionController {
         return transactionService.cashExchange(requestingUserId, transactionDto);
     }
 
-    @GetMapping()
-    public List<TransactionDto> getUserTransactionHistory(@PathVariable Integer requestingUserId){
-        return transactionService.getUserTransactionHistory(requestingUserId);
+    @GetMapping("/{userId}")
+    public List<TransactionDto> getUserTransactionHistory(@PathVariable Integer requestingUserId,
+                                                          @PathVariable Integer userId){
+        return transactionService.getUserTransactionHistory(requestingUserId, userId);
     }
 
     @GetMapping("/all")

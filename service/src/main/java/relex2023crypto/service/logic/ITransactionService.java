@@ -12,7 +12,7 @@ public interface ITransactionService {
 
     WalletDto cashExchange(Integer requestingUserId, TransactionDto dto);
 
-    List<TransactionDto> getUserTransactionHistory(Integer requestingUserId);
+    List<TransactionDto> getUserTransactionHistory(Integer requestingUserId, Integer userId);
 
     List<TransactionDto> getAllTransactions(Integer requestingUserId);
 
