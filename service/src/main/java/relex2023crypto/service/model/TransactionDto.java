@@ -9,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import java.util.Date;
 
 @RequiredArgsConstructor
 public class TransactionDto {
@@ -35,6 +37,11 @@ public class TransactionDto {
     @JsonProperty("message")
     @NotBlank(message = "message.is-blank")
     private String message;
+
+    @JsonProperty("date")
+    @NotBlank(message = "date.is-blank")
+    @PastOrPresent
+    private Date date;
 
     public Integer getId() {
         return id;
@@ -81,5 +88,13 @@ public class TransactionDto {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

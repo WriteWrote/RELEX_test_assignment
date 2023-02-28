@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import relex2023crypto.db.entities.WalletEntity;
 import relex2023crypto.service.validation.EmailUnique;
+import relex2023crypto.service.validation.login.LoginUnique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +22,7 @@ public class UserDto {
 
     @JsonProperty("login")
     @Pattern(regexp = "^[a-zA-Z\\d]{5,50}$", message = "login.invalid")
+    @LoginUnique
     @NotBlank(message = "login.is-blank")
     private String login;
 

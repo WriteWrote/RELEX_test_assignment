@@ -137,7 +137,12 @@ public class TransactionService implements ITransactionService {
         transactionRepository.save(transactionMapper.toEntity(exchangeFrom));
         transactionRepository.save(transactionMapper.toEntity(exchangeTo));
 
-        var responseArgs = new ExchangeResponseDto();
+        //todo: also go through all transactions from .doc and confirm that all of them are in order
+        var responseArgs = new ExchangeResponseDto(responseCashOut.getArgs()[0].getCurrencyId(),
+                responseCashOut.getArgs()[0].getSum(),
+                responseCashIn.getArgs()[0].getCurrencyId(),
+                responseCashIn.getArgs()[0].getSum(),
+                exchangeTo.getDate());
 
         return new ResponseDto<ExchangeResponseDto>(responseCashOut.getMessage() + "\n"
                 + responseArgs);
