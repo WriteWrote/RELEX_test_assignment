@@ -30,6 +30,10 @@ public class UserDto {
     @Email(message = "email.invalid")
     @EmailUnique
     private String email;
+
+    @JsonProperty("secret_key")
+    @NotBlank
+    private String secretKey;
     @JsonProperty("wallets")
     private List<WalletDto> wallets;
 
@@ -74,5 +78,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 }
