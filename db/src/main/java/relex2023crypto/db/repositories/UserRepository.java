@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Integer>, JpaRepository<UserEntity, Integer> {
+    UserEntity findBySecretKey(@NotEmpty(message = "secret key must not be empty") String secretKey);
+    Boolean existsBySecretKey(@NotEmpty(message = "secret key must not be empty") String secretKey);
     Boolean existsByEmailIgnoreCase(@NotEmpty(message = "email must not be empty") String email);
 
     Boolean existsByLoginIgnoreCase(@NotEmpty(message = "login must not be empty")

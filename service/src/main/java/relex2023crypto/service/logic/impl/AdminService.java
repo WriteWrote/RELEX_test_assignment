@@ -3,13 +3,18 @@ package relex2023crypto.service.logic.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
+import relex2023crypto.db.entities.AdminEntity;
+import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.repositories.AdminRepository;
 import relex2023crypto.service.logic.IAdminService;
-import relex2023crypto.service.logic.utils.AccessProvider;
+import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IAdminMapper;
 import relex2023crypto.service.model.AdminDto;
 import relex2023crypto.service.model.responses.ResponseDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,20 +22,21 @@ import java.util.Optional;
 @Service
 public class AdminService implements IAdminService {
     private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
-    private final AccessProvider provider;
+    private static final String PASSWORD = "42";
+    private final AdminAccessProvider provider;
     private final AdminRepository rep;
     private final IAdminMapper map;
 
     @Autowired
-    public AdminService(AdminRepository rep, IAdminMapper map, AccessProvider provider) {
+    public AdminService(AdminRepository rep, IAdminMapper map, AdminAccessProvider provider) {
         this.rep = rep;
         this.map = map;
         this.provider = provider;
     }
 
     @Override
-    public ResponseDto<AdminDto> createAdmin(Integer requestingUserId, AdminDto dto) {
-        Boolean access = provider.checkAccessByUserId(requestingUserId);
+    public ResponseDto<SecretKeyDto> createAdmin(Integer requestingUserId, AdminDto dto) {
+        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
         logger.info("Requested creating new admin by {}, access: {}",
                 requestingUserId, access);
 
@@ -39,18 +45,21 @@ public class AdminService implements IAdminService {
                     "This operation is only available for admins");
         }
 
+        TextEncryptor encryptor = Encryptors.text(PASSWORD, dto.getEmail().substring(0, 5));
+        String encryptedText = encryptor.encrypt(dto.getEmail());
 
-        return new ResponseDto<AdminDto>("Operation succeeded",
-                Optional.of(dto)
-                        .map(map::ToEntity)
-                        .map(rep::save)
-                        .map(map::fromEntity)
-                        .orElseThrow());
+        AdminEntity entity = map.ToEntity(dto);
+        entity.setSecretKey(encryptedText);
+
+        rep.save(entity);
+
+        return new ResponseDto<>("Operation succeeded",
+                new SecretKeyDto(encryptedText));
     }
 
     @Override
     public ResponseDto<Integer> deleteAdmin(Integer requestingUserId, Integer adminId) {
-        Boolean access = provider.checkAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
         logger.info("Requested deleting admin {} by user {}, access: {}",
                 adminId, requestingUserId, access);
         if (!access) {
@@ -63,7 +72,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public ResponseDto<List<AdminDto>> getAllAdmins(Integer requestingUserId) {
-        Boolean access = provider.checkAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
         logger.info("Requested all admins info by user {}, access: {}",
                 requestingUserId, access);
         if (!access) {

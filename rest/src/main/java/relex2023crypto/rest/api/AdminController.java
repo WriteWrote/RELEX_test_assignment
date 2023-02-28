@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.model.AdminDto;
 import relex2023crypto.service.model.responses.ResponseDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public ResponseDto<AdminDto> createAdmin(@RequestBody AdminDto dto, @PathVariable Integer requestingUserId){
+    public ResponseDto<SecretKeyDto> createAdmin(@RequestBody AdminDto dto, @PathVariable Integer requestingUserId){
         return service.createAdmin(requestingUserId, dto);
     }
     @DeleteMapping("/delete/{adminId}")

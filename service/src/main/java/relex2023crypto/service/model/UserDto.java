@@ -1,11 +1,8 @@
 package relex2023crypto.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import relex2023crypto.db.entities.WalletEntity;
-import relex2023crypto.service.validation.EmailUnique;
+import relex2023crypto.service.validation.email.EmailUnique;
 import relex2023crypto.service.validation.login.LoginUnique;
 
 import javax.validation.constraints.Email;
@@ -31,9 +28,9 @@ public class UserDto {
     @EmailUnique
     private String email;
 
-    @JsonProperty("secret_key")
-    @NotBlank
-    private String secretKey;
+//    @JsonProperty("secret_key")
+//    @NotBlank
+//    private String secretKey;
     @JsonProperty("wallets")
     private List<WalletDto> wallets;
 
@@ -78,13 +75,5 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
     }
 }

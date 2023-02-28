@@ -2,6 +2,7 @@ package relex2023crypto.service.logic;
 
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.WalletDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 
@@ -14,8 +15,7 @@ public interface IWalletService {
 
     ResponseDto<Integer> createWallet(WalletDto dto);
 
-    ResponseDto<List<WalletDto>> getUserWallets(Integer requestingUserId,
-                                                Integer userId);
+    ResponseDto<List<WalletDto>> getUserWallets(SecretKeyDto dto);
 
-    ResponseDto<List<WalletDto>> getAll(Integer requestingUserId);
+    ResponseDto<List<WalletDto>> getAll(SecretKeyDto dto);
 }

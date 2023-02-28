@@ -9,7 +9,6 @@ public interface IExchangeRateService {
     ExchangeRateDto getExchangeRateById(Integer first, Integer second);
 
     List<ExchangeRateDto> getAll();
-    ResponseDto<ExchangeRateDto> modifyExchangeRateById(Integer requestingUserId,
-                                                       ExchangeRateDto dto);
+    ResponseDto<ExchangeRateDto> modifyExchangeRateById(ExchangeRateDto dto);
 
 }

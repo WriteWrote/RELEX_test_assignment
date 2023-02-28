@@ -9,7 +9,7 @@ import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.db.repositories.TransactionRepository;
 import relex2023crypto.db.repositories.WalletRepository;
 import relex2023crypto.service.logic.ITransactionService;
-import relex2023crypto.service.logic.utils.AccessProvider;
+import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.ITransactionMapper;
 import relex2023crypto.service.mapper.IWalletMapper;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Service
 public class TransactionService implements ITransactionService {
     private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
-    private final AccessProvider provider;
+    private final AdminAccessProvider provider;
     private final TransactionRepository transactionRepository;
     private final ITransactionMapper transactionMapper;
     private final WalletRepository walletRepository;
@@ -32,7 +32,7 @@ public class TransactionService implements ITransactionService {
     private final ExchangeRateRepository exchangeRateRepository;
 
     @Autowired
-    public TransactionService(AccessProvider provider,
+    public TransactionService(AdminAccessProvider provider,
                               TransactionRepository transactionRepository,
                               WalletRepository walletRepository,
                               ITransactionMapper transactionMapper,
@@ -137,7 +137,7 @@ public class TransactionService implements ITransactionService {
         transactionRepository.save(transactionMapper.toEntity(exchangeFrom));
         transactionRepository.save(transactionMapper.toEntity(exchangeTo));
 
-        //todo: also go through all transactions from .doc and confirm that all of them are in order
+        //todo: add transaction which gets transaction count from date to date
         var responseArgs = new ExchangeResponseDto(responseCashOut.getArgs()[0].getCurrencyId(),
                 responseCashOut.getArgs()[0].getSum(),
                 responseCashIn.getArgs()[0].getCurrencyId(),
@@ -150,7 +150,7 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public ResponseDto<List<TransactionDto>> getUserTransactionHistory(Integer requestingUserId, Integer userId) {
-        Boolean access = provider.checkAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
         logger.info("Requested user {} transaction history by user {}, access {}",
                 userId, requestingUserId, access);
 
@@ -168,7 +168,7 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public ResponseDto<List<TransactionDto>> getAllTransactions(Integer requestingUserId) {
-        Boolean access = provider.checkAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
         logger.info("Requested all transactions by user {}, access: {}",
                 requestingUserId, access);
 

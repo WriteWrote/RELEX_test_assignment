@@ -1,10 +1,9 @@
 package relex2023crypto.service.model.responses;
 
-import lombok.RequiredArgsConstructor;
-public class SecretKeyResponceDto {
+public class SecretKeyDto {
     private String secretKey;
 
-    public SecretKeyResponceDto(String secretKey) {
+    public SecretKeyDto(String secretKey) {
         this.secretKey = secretKey;
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ITransactionMapper {
     @Mapping(target = "sum", source = "currencySum")
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "secretKey", source = "user.secretKey")
     TransactionDto fromEntity(TransactionEntity entity);
 
     @Mapping(target = "user", ignore = true)

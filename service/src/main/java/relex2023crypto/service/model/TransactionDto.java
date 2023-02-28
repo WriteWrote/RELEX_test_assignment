@@ -18,9 +18,9 @@ public class TransactionDto {
     @NotNull
     private Integer id;
 
-    @JsonProperty("user_id")
+    @JsonProperty("secret_key")
     @NotNull
-    private Integer userId;
+    private String secretKey;
 
     @JsonProperty("wallet_id")
     @NotNull
@@ -51,12 +51,12 @@ public class TransactionDto {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getSecretKey() {
+        return secretKey;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     public Integer getCurrencyId() {

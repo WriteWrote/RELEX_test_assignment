@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.IWalletService;
 import relex2023crypto.service.model.WalletDto;
 import relex2023crypto.service.model.responses.ResponseDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 
@@ -18,21 +19,19 @@ public class WalletController {
         this.walletService = walletService;
     }
 
-    @GetMapping("/info/user{userId}")
-    public ResponseDto<List<WalletDto>> getUserAllWalletsInfo(@PathVariable Integer requestingUserId,
-                                                              @PathVariable Integer userId) {
-        return walletService.getUserWallets(requestingUserId, userId);
+    @GetMapping("/info/all")
+    public ResponseDto<List<WalletDto>> getAllWallets(SecretKeyDto dto) {
+        return walletService.getAll(dto);
+    }
+    @GetMapping("/info")
+    public ResponseDto<List<WalletDto>> getUserAllWallets(@RequestBody SecretKeyDto dto) {
+        return walletService.getUserWallets(dto);
     }
 
     @GetMapping("/info/{walletId}")
-    public ResponseDto<WalletDto> getWalletInfoById(@PathVariable Integer requestingUserId,
-                                                    @PathVariable Integer walletId) {
+    public ResponseDto<WalletDto> getWalletById(@PathVariable Integer requestingUserId,
+                                                @PathVariable Integer walletId) {
         return walletService.getWalletById(requestingUserId, walletId);
-    }
-
-    @GetMapping("/info/all")
-    public ResponseDto<List<WalletDto>> getAllWallets(@PathVariable Integer requestingUserId) {
-        return walletService.getAll(requestingUserId);
     }
 
     @PostMapping("/create")

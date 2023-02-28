@@ -20,4 +20,6 @@ public interface ITransactionService {
 
     ResponseDto<List<TransactionDto>> getAllTransactions(Integer requestingUserId);
 
+//    ResponseDto<List<TransactionDto>> getTransactionsInDateGap();
+
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import relex2023crypto.db.entities.ExchangeRateEntity;
 import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.service.logic.IExchangeRateService;
-import relex2023crypto.service.logic.utils.AccessProvider;
+import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IExchangeRateMapper;
 import relex2023crypto.service.model.ExchangeRateDto;
 import relex2023crypto.service.model.responses.ResponseDto;
@@ -18,12 +18,12 @@ import java.util.Optional;
 @Service
 public class ExchangeRateService implements IExchangeRateService {
     private static final Logger logger = LoggerFactory.getLogger(ExchangeRateService.class);
-    private final AccessProvider provider;
+    private final AdminAccessProvider provider;
     private final ExchangeRateRepository rep;
     private final IExchangeRateMapper map;
 
     @Autowired
-    public ExchangeRateService(AccessProvider provider, ExchangeRateRepository rep, IExchangeRateMapper map) {
+    public ExchangeRateService(AdminAccessProvider provider, ExchangeRateRepository rep, IExchangeRateMapper map) {
         this.provider = provider;
         this.rep = rep;
         this.map = map;
@@ -47,10 +47,12 @@ public class ExchangeRateService implements IExchangeRateService {
     }
 
     @Override
-    public ResponseDto<ExchangeRateDto> modifyExchangeRateById(Integer requestingUserId, ExchangeRateDto dto) {
-        Boolean access = provider.checkAccessByUserId(requestingUserId);
-        logger.info("Requested modifying the currency exchange rate ({} - {}) by user {}, access: {}",
-                dto.getCurrency_id1(), dto.getCurrency_id2(), requestingUserId, access);
+    public ResponseDto<ExchangeRateDto> modifyExchangeRateById(ExchangeRateDto dto) {
+//        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserSecretKey(dto.getRequestingSecretKey());
+
+        logger.info("Requested modifying the currency exchange rate ({} - {}) by secret key: {}, access: {}",
+                dto.getCurrency_id1(), dto.getCurrency_id2(), dto.getRequestingSecretKey(), access);
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
                     "This operation is only available for admins");

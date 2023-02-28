@@ -5,13 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
+import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.repositories.UserRepository;
 import relex2023crypto.service.logic.IUserService;
-import relex2023crypto.service.logic.utils.AccessProvider;
+import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IUserMapper;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.UserDto;
-import relex2023crypto.service.model.responses.SecretKeyResponceDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,29 +21,29 @@ import java.util.Optional;
 public class UserService implements IUserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private static final String PASSWORD = "42";
-    private final AccessProvider provider;
+    private final AdminAccessProvider provider;
     private final UserRepository rep;
     private final IUserMapper map;
 
-    public UserService(AccessProvider provider, UserRepository rep, IUserMapper map) {
+    public UserService(AdminAccessProvider provider, UserRepository rep, IUserMapper map) {
         this.provider = provider;
         this.rep = rep;
         this.map = map;
     }
 
     @Override
-    public SecretKeyResponceDto createUser(UserDto dto) {
+    public SecretKeyDto createUser(UserDto dto) {
         logger.info("Requested creating new user {}",
                 dto.getId());
 
         TextEncryptor encryptor = Encryptors.text(PASSWORD, dto.getLogin());
         String encryptedText = encryptor.encrypt(dto.getEmail());
 
-        dto.setSecretKey(encryptedText);
+        UserEntity entity = map.toEntity(dto);
+        entity.setSecretKey(encryptedText);
+        rep.save(entity);
 
-        rep.save(map.toEntity(dto));
-
-        return new SecretKeyResponceDto(encryptedText);
+        return new SecretKeyDto(encryptedText);
     }
 
     @Override

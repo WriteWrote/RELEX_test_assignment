@@ -2,12 +2,11 @@ package relex2023crypto.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
-import relex2023crypto.service.validation.EmailUnique;
+import relex2023crypto.service.validation.email.EmailUnique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @RequiredArgsConstructor
 public class AdminDto {

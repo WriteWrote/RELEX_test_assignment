@@ -6,7 +6,7 @@ import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.logic.impl.UserService;
 import relex2023crypto.service.model.UserDto;
 import relex2023crypto.service.model.responses.ResponseDto;
-import relex2023crypto.service.model.responses.SecretKeyResponceDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 
@@ -19,9 +19,8 @@ public class UserController {
     public UserController(UserService service) {
         this.service = service;
     }
-
     @PostMapping("/new")
-    public SecretKeyResponceDto createUser(@RequestBody UserDto dto) {
+    public SecretKeyDto createUser(@RequestBody UserDto dto) {
         return service.createUser(dto);
     }
 

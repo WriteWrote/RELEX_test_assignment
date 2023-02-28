@@ -1,4 +1,4 @@
-package relex2023crypto.service.validation;
+package relex2023crypto.service.validation.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import relex2023crypto.db.repositories.UserRepository;

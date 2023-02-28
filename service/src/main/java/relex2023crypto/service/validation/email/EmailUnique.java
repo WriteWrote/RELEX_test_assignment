@@ -1,4 +1,4 @@
-package relex2023crypto.service.validation;
+package relex2023crypto.service.validation.email;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

@@ -22,6 +22,10 @@ public class ExchangeRateDto {
     @NotNull
     private Double coef;
 
+    @JsonProperty("secret_key")
+    @NotNull
+    private String requestingSecretKey;
+
     public Integer getCurrency_id1() {
         return currency_id1;
     }
@@ -44,5 +48,13 @@ public class ExchangeRateDto {
 
     public void setCurrency_id1(Integer currency_id1) {
         this.currency_id1 = currency_id1;
+    }
+
+    public String getRequestingSecretKey() {
+        return requestingSecretKey;
+    }
+
+    public void setRequestingSecretKey(String requestingSecretKey) {
+        this.requestingSecretKey = requestingSecretKey;
     }
 }

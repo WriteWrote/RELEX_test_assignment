@@ -9,7 +9,7 @@ import relex2023crypto.service.model.responses.ResponseDto;
 import java.util.List;
 
 @RestController
-@RequestMapping("user/{userId}/cash/rate")
+@RequestMapping("user/cash/rate")
 public class ExchangeRateController {
     private final IExchangeRateService exchangeRateService;
 
@@ -30,9 +30,8 @@ public class ExchangeRateController {
     }
 
     @PostMapping("/modify")
-    public ResponseDto<ExchangeRateDto> modifyCurrencyExchangeRate(@PathVariable Integer userId,
-                                                                  @RequestBody ExchangeRateDto dto){
-        return exchangeRateService.modifyExchangeRateById(userId, dto);
+    public ResponseDto<ExchangeRateDto> modifyCurrencyExchangeRate(@RequestBody ExchangeRateDto dto){
+        return exchangeRateService.modifyExchangeRateById(dto);
     }
 
 }

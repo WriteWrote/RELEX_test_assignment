@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ICurrencyService;
 import relex2023crypto.service.model.CurrencyDto;
+import relex2023crypto.service.model.responses.CurrencySumDto;
 import relex2023crypto.service.model.responses.ResponseDto;
+import relex2023crypto.service.model.responses.SecretKeyDto;
 
 import java.util.List;
 
@@ -33,5 +35,11 @@ public class CurrencyController {
     public ResponseDto<Integer> deleteCurrency(@PathVariable Integer requestingUserId,
                                       @PathVariable Integer currencyId){
         return service.deleteCurrencyById(requestingUserId, currencyId);
+    }
+
+    @GetMapping("/{currencyId}/sum")
+    public ResponseDto<CurrencySumDto> checkCurrencySum(@PathVariable Integer currencyId,
+                                                        @RequestBody SecretKeyDto dto){
+        return service.checkCurrencySum(currencyId, dto);
     }
 }
