@@ -15,28 +15,21 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    @NotEmpty(message = "user in transactionEntity must not be empty")
     @ManyToOne()
     @JoinColumn(name = "user_id",
             referencedColumnName = "id",
             nullable = false)
     private UserEntity user;
-
-    @NotEmpty(message = "Wallet id must not be empty in TransactionEntity")
     @Column(name = "wallet_id")
     private Integer walletId;
 
     @Column(name = "currency_id")
-    @NotEmpty(message = "currencyId in TransactionEntity must not be empty")
     private Integer currencyId;
 
     @Column(name = "currency_sum")
-    @NotEmpty(message = "currencySum in TransactionEntity must not be empty")
     private Double currencySum;
 
     @Column(name = "date")
-    @NotEmpty(message = "date must not be empty")
     private Date date;
 
     @Column(name = "message")

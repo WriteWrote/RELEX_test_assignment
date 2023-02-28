@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import relex2023crypto.db.entities.TransactionEntity;
+import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.entities.WalletEntity;
 import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.db.repositories.TransactionRepository;
@@ -62,10 +63,11 @@ public class TransactionService implements ITransactionService {
                     newWallet);
         }
 
+        // todo: weird shit is going over there
         WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(walletId));
         walletRepository.save(newEntity);
 
-        return new ResponseDto<WalletDto>("Operation succeeded", newWallet);
+        return new ResponseDto<WalletDto>("Operation succeeded", Boolean.TRUE, newWallet);
     }
 
     private ResponseDto<WalletDto> cashIn(Integer walletId, Double sum) {
@@ -78,7 +80,7 @@ public class TransactionService implements ITransactionService {
         WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(walletId));
         walletRepository.save(newEntity);
 
-        return new ResponseDto<WalletDto>("Operation succeeded", newWallet);
+        return new ResponseDto<WalletDto>("Operation succeeded", Boolean.TRUE, newWallet);
     }
 
     @Override
@@ -133,7 +135,12 @@ public class TransactionService implements ITransactionService {
 //          exchangeTo.setSum(exchangedSum);
 
             entityFrom = transactionMapper.toEntity(dto);
+            entityFrom.setMessage("out");
+            entityFrom.setUser(walletRepository.getById(dto.getWalletId()).getUser());
+
             entityTo = transactionMapper.toEntity(dto);
+            entityTo.setMessage("in");
+            entityTo.setUser(walletRepository.getById(dto.getWalletToId()).getUser());
             entityTo.setCurrencySum(exchangedSum);
 
             responseCashIn = cashIn(dto.getWalletToId(), exchangedSum);
