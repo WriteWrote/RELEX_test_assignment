@@ -1,7 +1,8 @@
-package relex2023crypto.service.model;
+package relex2023crypto.service.model.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
+import relex2023crypto.service.model.UserDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -20,7 +20,7 @@ public class WalletController {
     }
 
     @GetMapping("/info/all")
-    public ResponseDto<List<WalletDto>> getAllWallets(SecretKeyDto dto) {
+    public ResponseDto<List<WalletDto>> getAllWallets(@RequestBody SecretKeyDto dto) {
         return walletService.getAll(dto);
     }
     @GetMapping("/info")

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ITransactionService;
 import relex2023crypto.service.model.WalletDto;
+import relex2023crypto.service.model.requests.ExchangeRequest;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.TransactionDto;
@@ -34,9 +35,8 @@ public class TransactionController {
 
     @PostMapping("/exchange")
     public ResponseDto<ExchangeResponseDto> cashExchange(@PathVariable Integer requestingUserId,
-                                                         @RequestBody TransactionDto exchangeFrom,
-                                                         @RequestBody TransactionDto exchangeTo){
-        return transactionService.cashExchange(requestingUserId, exchangeFrom, exchangeTo);
+                                                         @RequestBody ExchangeRequest dto){
+        return transactionService.cashExchange(requestingUserId, dto);
     }
 
     @GetMapping("/{userId}")

@@ -15,15 +15,12 @@ public class ExchangeRateEntity {
     private Integer id;
 
     @Column(name = "currency_from")
-    @NotEmpty(message = "currencyid1 in currencyEntity must not be empty")
     private Integer currencyFrom;
 
     @Column(name = "currency_to")
-    @NotEmpty(message = "currencyid2 in currencyEntity must not be empty")
     private Integer currencyTo;
 
     @Column(name = "coef")
-    @NotEmpty(message = "coef in ExchangeRate must not be empty")
     private Double coef;
 
     public Integer getId() {

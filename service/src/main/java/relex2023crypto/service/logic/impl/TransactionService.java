@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import relex2023crypto.db.entities.TransactionEntity;
 import relex2023crypto.db.entities.WalletEntity;
 import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.db.repositories.TransactionRepository;
@@ -12,6 +13,7 @@ import relex2023crypto.service.logic.ITransactionService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.ITransactionMapper;
 import relex2023crypto.service.mapper.IWalletMapper;
+import relex2023crypto.service.model.requests.ExchangeRequest;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.TransactionDto;
@@ -46,12 +48,12 @@ public class TransactionService implements ITransactionService {
         this.exchangeRateRepository = exchangeRateRepository;
     }
 
-    private ResponseDto<WalletDto> cashOut(TransactionDto dto) {
-        WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(dto.getWalletId()));
+    private ResponseDto<WalletDto> cashOut(Integer walletId, Double sum) {
+        WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(walletId));
 
-        if (newWallet.getSum() >= dto.getSum()) {
+        if (newWallet.getSum() >= sum) {
             logger.info("Operation succeeded");
-            Double newSum = newWallet.getSum() - dto.getSum();
+            Double newSum = newWallet.getSum() - sum;
             newWallet.setSum(newSum);
         } else {
             logger.info("Operation denied due to lack of cash on the wallet");
@@ -60,20 +62,20 @@ public class TransactionService implements ITransactionService {
                     newWallet);
         }
 
-        WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(dto.getWalletId()));
+        WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(walletId));
         walletRepository.save(newEntity);
 
         return new ResponseDto<WalletDto>("Operation succeeded", newWallet);
     }
 
-    private ResponseDto<WalletDto> cashIn(TransactionDto dto) {
-        WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(dto.getWalletId()));
+    private ResponseDto<WalletDto> cashIn(Integer walletId, Double sum) {
+        WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(walletId));
 
         logger.info("Operation succeeded");
-        Double newSum = newWallet.getSum() + dto.getSum();
+        Double newSum = newWallet.getSum() + sum;
         newWallet.setSum(newSum);
 
-        WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(dto.getWalletId()));
+        WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(walletId));
         walletRepository.save(newEntity);
 
         return new ResponseDto<WalletDto>("Operation succeeded", newWallet);
@@ -84,7 +86,7 @@ public class TransactionService implements ITransactionService {
         logger.info("Requested cash out by user {}, wallet {}, currency{}, sum {}, access{}",
                 requestingUserId, dto.getWalletId(), dto.getCurrencyId(), dto.getSum(), "access");
 
-        ResponseDto<WalletDto> response = cashOut(dto);
+        ResponseDto<WalletDto> response = cashOut(dto.getWalletId(), dto.getSum());
 
         if (!response.getSuccess()) {
             dto.setMessage("denied");
@@ -100,7 +102,7 @@ public class TransactionService implements ITransactionService {
         logger.info("Requested cash in by user {}, wallet {}, currency{}, sum {}, access{}",
                 requestingUserId, dto.getWalletId(), dto.getCurrencyId(), dto.getSum(), "access");
 
-        ResponseDto<WalletDto> response = cashIn(dto);
+        ResponseDto<WalletDto> response = cashIn(dto.getWalletId(), dto.getSum());
 
         transactionRepository.save(transactionMapper.toEntity(dto));
 
@@ -109,40 +111,46 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public ResponseDto<ExchangeResponseDto> cashExchange(Integer requestingUserId,
-                                                         TransactionDto exchangeFrom,
-                                                         TransactionDto exchangeTo) {
+                                                         ExchangeRequest dto) {
         logger.info("Requested cash exchange by user {}, wallet from {}, currency from{}, sum {}" +
                         "wallet to {}, currency to {}, access{}",
                 requestingUserId,
-                exchangeFrom.getWalletId(), exchangeFrom.getCurrencyId(),
-                exchangeFrom.getSum(),
-                exchangeTo.getWalletId(), exchangeTo.getCurrencyId(),
+                dto.getWalletToId(), dto.getCurrencyToId(),
+                dto.getSum(),
+                dto.getWalletToId(), dto.getCurrencyToId(),
                 "access");
 
-        ResponseDto<WalletDto> responseCashOut = cashOut(exchangeFrom);
+        ResponseDto<WalletDto> responseCashOut = cashOut(dto.getWalletId(), dto.getSum());
         ResponseDto<WalletDto> responseCashIn = new ResponseDto<>("suspended");
 
+        TransactionEntity entityFrom = new TransactionEntity();
+        TransactionEntity entityTo = new TransactionEntity();
+
         if (responseCashOut.getSuccess()) {
-            Double coef = exchangeRateRepository.findByCurrencyFromAndCurrencyTo(exchangeFrom.getCurrencyId(),
-                            exchangeTo.getCurrencyId())
-                    .getCoef();
-            Double exchangedSum = exchangeFrom.getSum() * coef;
-            exchangeTo.setSum(exchangedSum);
-            responseCashIn = cashIn(exchangeTo);
+            Double coef = exchangeRateRepository.findByCurrencyFromAndCurrencyTo(dto.getCurrencyId(),
+                            dto.getCurrencyToId()).getCoef();
+            Double exchangedSum = dto.getSum() * coef;
+//          exchangeTo.setSum(exchangedSum);
+
+            entityFrom = transactionMapper.toEntity(dto);
+            entityTo = transactionMapper.toEntity(dto);
+            entityTo.setCurrencySum(exchangedSum);
+
+            responseCashIn = cashIn(dto.getWalletToId(), exchangedSum);
         } else {
-            exchangeFrom.setMessage("denied");
-            exchangeTo.setMessage("denied");
+            entityFrom.setMessage("denied");
+            entityTo.setMessage("denied");
         }
 
-        transactionRepository.save(transactionMapper.toEntity(exchangeFrom));
-        transactionRepository.save(transactionMapper.toEntity(exchangeTo));
+        transactionRepository.save(entityFrom);
+        transactionRepository.save(entityTo);
 
         //todo: add transaction which gets transaction count from date to date
         var responseArgs = new ExchangeResponseDto(responseCashOut.getArgs()[0].getCurrencyId(),
                 responseCashOut.getArgs()[0].getSum(),
                 responseCashIn.getArgs()[0].getCurrencyId(),
                 responseCashIn.getArgs()[0].getSum(),
-                exchangeTo.getDate());
+                dto.getDate());
 
         return new ResponseDto<ExchangeResponseDto>(responseCashOut.getMessage() + "\n"
                 + responseArgs);

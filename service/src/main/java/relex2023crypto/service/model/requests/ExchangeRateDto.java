@@ -1,4 +1,4 @@
-package relex2023crypto.service.model;
+package relex2023crypto.service.model.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;

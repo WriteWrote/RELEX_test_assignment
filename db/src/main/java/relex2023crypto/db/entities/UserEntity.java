@@ -87,4 +87,12 @@ public class UserEntity {
     public void setTransactionsHistory(List<TransactionEntity> transactionsHistory) {
         this.transactionsHistory = transactionsHistory;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

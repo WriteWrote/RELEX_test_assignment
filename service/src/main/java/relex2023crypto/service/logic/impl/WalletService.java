@@ -72,7 +72,9 @@ public class WalletService implements IWalletService {
     public ResponseDto<Integer> createWallet(WalletDto dto) {
         logger.info("Requested creation of wallet {} in currency {} by user {}",
                 dto.getId(), dto.getCurrencyId(), dto.getUserId());
-        rep.save(map.toEntity(dto));
+        WalletEntity wallet = map.toEntity(dto);
+        wallet.setUser(userRepository.getById(dto.getUserId()));
+        rep.save(wallet);
         return new ResponseDto<Integer>("Wallet {} in currency {} by user {} was created successfully",
                 dto.getId(), dto.getCurrencyId(), dto.getUserId());
     }

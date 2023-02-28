@@ -23,6 +23,7 @@ import java.util.Optional;
 public class AdminService implements IAdminService {
     private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
     private static final String PASSWORD = "42";
+    private final String SALT = "34";
     private final AdminAccessProvider provider;
     private final AdminRepository rep;
     private final IAdminMapper map;
@@ -36,7 +37,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public ResponseDto<SecretKeyDto> createAdmin(Integer requestingUserId, AdminDto dto) {
-        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserSecretKey(rep.getById(requestingUserId).getSecretKey());
         logger.info("Requested creating new admin by {}, access: {}",
                 requestingUserId, access);
 
@@ -45,7 +46,7 @@ public class AdminService implements IAdminService {
                     "This operation is only available for admins");
         }
 
-        TextEncryptor encryptor = Encryptors.text(PASSWORD, dto.getEmail().substring(0, 5));
+        TextEncryptor encryptor = Encryptors.text(PASSWORD, SALT);
         String encryptedText = encryptor.encrypt(dto.getEmail());
 
         AdminEntity entity = map.ToEntity(dto);
@@ -59,7 +60,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public ResponseDto<Integer> deleteAdmin(Integer requestingUserId, Integer adminId) {
-        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserSecretKey(rep.getById(requestingUserId).getSecretKey());
         logger.info("Requested deleting admin {} by user {}, access: {}",
                 adminId, requestingUserId, access);
         if (!access) {
@@ -72,7 +73,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public ResponseDto<List<AdminDto>> getAllAdmins(Integer requestingUserId) {
-        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
+        Boolean access = provider.checkAdminAccessByUserSecretKey(rep.getById(requestingUserId).getSecretKey());
         logger.info("Requested all admins info by user {}, access: {}",
                 requestingUserId, access);
         if (!access) {

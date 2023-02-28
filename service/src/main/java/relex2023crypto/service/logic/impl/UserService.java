@@ -10,6 +10,7 @@ import relex2023crypto.db.repositories.UserRepository;
 import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IUserMapper;
+import relex2023crypto.service.model.requests.CreateUserDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.UserDto;
 import relex2023crypto.service.model.responses.SecretKeyDto;
@@ -20,7 +21,8 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    private static final String PASSWORD = "42";
+    private static final String PASSWORD = "34";
+    private final String SALT = "42";
     private final AdminAccessProvider provider;
     private final UserRepository rep;
     private final IUserMapper map;
@@ -32,11 +34,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public SecretKeyDto createUser(UserDto dto) {
+    public SecretKeyDto createUser(CreateUserDto dto) {
         logger.info("Requested creating new user {}",
                 dto.getId());
 
-        TextEncryptor encryptor = Encryptors.text(PASSWORD, dto.getLogin());
+        TextEncryptor encryptor = Encryptors.text(PASSWORD, SALT);
         String encryptedText = encryptor.encrypt(dto.getEmail());
 
         UserEntity entity = map.toEntity(dto);

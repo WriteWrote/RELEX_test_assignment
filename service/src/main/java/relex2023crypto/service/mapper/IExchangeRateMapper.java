@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import relex2023crypto.db.entities.ExchangeRateEntity;
-import relex2023crypto.service.model.ExchangeRateDto;
+import relex2023crypto.service.model.requests.ExchangeRateDto;
 
 import java.util.List;
 

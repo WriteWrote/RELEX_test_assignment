@@ -16,7 +16,6 @@ public class WalletEntity {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty(message = "user in walletEntity must not be empty")
     @ManyToOne()
     @JoinColumn(name = "user_id",
             referencedColumnName = "id",
@@ -24,7 +23,6 @@ public class WalletEntity {
     private UserEntity user;
 
     @Column(name = "currency_id")
-    @NotEmpty(message = "currencyId in WalletEntity must not be empty")
     private Integer currencyId;
 
     @Column(name = "currency_sum")

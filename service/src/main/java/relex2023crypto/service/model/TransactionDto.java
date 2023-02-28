@@ -1,12 +1,8 @@
 package relex2023crypto.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -63,8 +59,8 @@ public class TransactionDto {
         return currencyId;
     }
 
-    public void setCurrencyId(Integer currencyId) {
-        this.currencyId = currencyId;
+    public void setCurrencyId(Integer currencyToId) {
+        this.currencyId = currencyToId;
     }
 
     public Double getSum() {
@@ -78,8 +74,8 @@ public class TransactionDto {
     public Integer getWalletId() {
         return walletId;
     }
-    public void setWalletId(Integer walletId) {
-        this.walletId = walletId;
+    public void setWalletId(Integer walletToId) {
+        this.walletId = walletToId;
     }
 
     public String getMessage() {

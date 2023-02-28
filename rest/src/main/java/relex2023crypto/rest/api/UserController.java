@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.logic.impl.UserService;
+import relex2023crypto.service.model.requests.CreateUserDto;
 import relex2023crypto.service.model.UserDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.responses.SecretKeyDto;
@@ -19,8 +20,9 @@ public class UserController {
     public UserController(UserService service) {
         this.service = service;
     }
+
     @PostMapping("/new")
-    public SecretKeyDto createUser(@RequestBody UserDto dto) {
+    public SecretKeyDto createUser(@RequestBody CreateUserDto dto) {
         return service.createUser(dto);
     }
 

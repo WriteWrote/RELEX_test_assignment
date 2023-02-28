@@ -9,7 +9,7 @@ import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.service.logic.IExchangeRateService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IExchangeRateMapper;
-import relex2023crypto.service.model.ExchangeRateDto;
+import relex2023crypto.service.model.requests.ExchangeRateDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
@@ -39,6 +39,33 @@ public class ExchangeRateService implements IExchangeRateService {
     }
 
     @Override
+    public ResponseDto<ExchangeRateDto> createExchangeRate(ExchangeRateDto dto) {
+        Boolean access = provider.checkAdminAccessByUserSecretKey(dto.getRequestingSecretKey());
+        logger.info("Requested creating new exchange rate by secret key {}, access: {}",
+                dto.getRequestingSecretKey(), access);
+        if (!access) {
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins");
+        }
+
+        ExchangeRateEntity entity = map.toEntity(dto);
+        rep.save(entity);
+        return new ResponseDto<>("Operation succeeded");
+    }
+
+    @Override
+    public ResponseDto<Integer> deleteExchangeRate(Integer requestingUser, Integer rateId) {
+        Boolean access = provider.checkAdminAccessByUserId(requestingUser);
+        logger.info("Requested creating new exchange rate by user {}, access: {}",
+                requestingUser, access);
+        if (!access) {
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins");
+        }
+        rep.deleteById(rateId);
+        return new ResponseDto<>("Operation succeeded");
+    }
+    @Override
     public List<ExchangeRateDto> getAll() {
         logger.info("Requested all exchange rates");
         return Optional.of(rep.findAll())
@@ -48,7 +75,6 @@ public class ExchangeRateService implements IExchangeRateService {
 
     @Override
     public ResponseDto<ExchangeRateDto> modifyExchangeRateById(ExchangeRateDto dto) {
-//        Boolean access = provider.checkAdminAccessByUserId(requestingUserId);
         Boolean access = provider.checkAdminAccessByUserSecretKey(dto.getRequestingSecretKey());
 
         logger.info("Requested modifying the currency exchange rate ({} - {}) by secret key: {}, access: {}",
@@ -63,7 +89,7 @@ public class ExchangeRateService implements IExchangeRateService {
 
         return new ResponseDto<>("Operation succeeded",
                 Optional.of(rep.save(newEntity))
-                .map(map::fromEntity)
-                .orElseThrow());
+                        .map(map::fromEntity)
+                        .orElseThrow());
     }
 }
