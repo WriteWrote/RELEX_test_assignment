@@ -22,6 +22,10 @@ public class UserEntity {
     @Size(min = 4, max = 50, message = "login must be from 4 to 50 characters")
     private String login;
 
+    @Column(name = "email")
+    @NotEmpty(message = "email must not be empty")
+    private String email;
+
     @Column(name = "secret_key")
     @NotEmpty(message = "secret key must not be empty")
     private String secretKey;

@@ -3,14 +3,15 @@ CREATE SCHEMA tar2023_crypto;
 CREATE TABLE tar2023_crypto.users(
                                      id              SERIAL  PRIMARY KEY ,
                                      login           VARCHAR(50),
+                                     email           varchar(50) UNIQUE ,
                                      password        VARCHAR(50),
                                      secret_key      VARCHAR(100)    UNIQUE
 );
 
 CREATE TABLE tar2023_crypto.admins(
-    id              SERIAL PRIMARY KEY,
-    secret_key      VARCHAR(100)    UNIQUE,
-    email           VARCHAR(50) UNIQUE
+                                      id              SERIAL PRIMARY KEY,
+                                      secret_key      VARCHAR(100)    UNIQUE,
+                                      email           VARCHAR(50) UNIQUE
 );
 
 CREATE TABLE tar2023_crypto.currencies(

@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import relex2023crypto.db.entities.WalletEntity;
+import relex2023crypto.service.validation.EmailUnique;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -20,6 +22,10 @@ public class UserDto {
     @NotBlank(message = "login.is-blank")
     private String login;
 
+    @JsonProperty("email")
+    @Email(message = "email.invalid")
+    @EmailUnique
+    private String email;
     @JsonProperty("wallets")
     private List<WalletDto> wallets;
 
@@ -56,5 +62,13 @@ public class UserDto {
 
     public void setTransactions(List<TransactionDto> transactions) {
         this.transactions = transactions;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
