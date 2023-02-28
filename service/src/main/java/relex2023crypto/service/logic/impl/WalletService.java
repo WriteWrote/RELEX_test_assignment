@@ -37,61 +37,69 @@ public class WalletService implements IWalletService {
     }
 
     @Override
-    public WalletDto getWalletById(Integer requestingUserId, Integer walletId) {
+    public ResponseDto<WalletDto> getWalletById(Integer requestingUserId, Integer walletId) {
         Boolean access = checkAccess(requestingUserId, rep.getById(walletId));
         logger.info("Requested wallet {} info by user {}, access: {}",
                 walletId, requestingUserId, access);
         if (!(access)) {
-            return null;
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins or user owning the wallet");
         }
-        return rep.findById(walletId)
-                .map(map::fromEntity)
-                .orElseThrow();
+        return new ResponseDto<>("Operation succeeded",
+                rep.findById(walletId)
+                        .map(map::fromEntity)
+                        .orElseThrow());
     }
 
     @Override
-    public ResponseDto deleteWalletById(Integer requestingUserId, Integer walletID) {
+    public ResponseDto<Integer> deleteWalletById(Integer requestingUserId, Integer walletID) {
         Boolean access = checkAccess(requestingUserId, rep.getById(walletID));
         logger.info("Deleting wallet {} was requested by user {}, access: {}",
                 walletID, requestingUserId, access);
         if (!access)
-            return null;
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins or user owning wallet {}", walletID);
         rep.deleteById(walletID);
-        return new ResponseDto("Wallet {} was successfully deleted", walletID);
+        return new ResponseDto<Integer>("Wallet {} was successfully deleted", walletID);
     }
 
     @Override
-    public ResponseDto createWallet(WalletDto dto) {
+    public ResponseDto<Integer> createWallet(WalletDto dto) {
         logger.info("Requested creation of wallet {} in currency {} by user {}",
                 dto.getId(), dto.getCurrencyId(), dto.getUserId());
         rep.save(map.toEntity(dto));
-        return new ResponseDto("Wallet {} in currency {} by user {} was created successfully",
+        return new ResponseDto<Integer>("Wallet {} in currency {} by user {} was created successfully",
                 dto.getId(), dto.getCurrencyId(), dto.getUserId());
     }
 
     @Override
-    public List<WalletDto> getUserWallets(Integer userId) {
-        Boolean access = provider.checkAccessByUserId(userId);
+    public ResponseDto<List<WalletDto>> getUserWallets(Integer requestingUserId,
+                                                       Integer userId) {
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested all user {} wallets by user {}, access: {}",
                 userId, "userId", access);
         if (!access) {
-            return null;
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins or user who ows his wallets");
         }
-        return Optional.of(rep.findAll())
-                .map(map::fromEntities)
-                .orElseThrow();
+        return new ResponseDto<>("Operation succeeded",
+                Optional.of(rep.findAll())
+                        .map(map::fromEntities)
+                        .orElseThrow());
     }
 
     @Override
-    public List<WalletDto> getAll(Integer requestingUserId) {
+    public ResponseDto<List<WalletDto>> getAll(Integer requestingUserId) {
         Boolean access = checkAccess(requestingUserId, rep.findAllByUserId(requestingUserId).get(0));
         logger.info("Requested all wallets info by user {}, access: {}",
                 requestingUserId, "access");
         if (!access) {
-            return null;
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins");
         }
-        return Optional.of(rep.findAll())
-                .map(map::fromEntities)
-                .orElseThrow();
+        return new ResponseDto<>("Operation succeeded",
+                Optional.of(rep.findAll())
+                        .map(map::fromEntities)
+                        .orElseThrow());
     }
 }

@@ -24,13 +24,13 @@ public class CurrencyController {
     }
 
     @PostMapping("/create")
-    public CurrencyDto createCurrency(@PathVariable Integer requestingUserId,
+    public ResponseDto<CurrencyDto> createCurrency(@PathVariable Integer requestingUserId,
                                       @RequestBody CurrencyDto dto){
         return service.createCurrency(requestingUserId, dto);
     }
 
     @DeleteMapping("/delete/{currencyId}")
-    public ResponseDto deleteCurrency(@PathVariable Integer requestingUserId,
+    public ResponseDto<Integer> deleteCurrency(@PathVariable Integer requestingUserId,
                                       @PathVariable Integer currencyId){
         return service.deleteCurrencyById(requestingUserId, currencyId);
     }

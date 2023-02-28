@@ -8,7 +8,7 @@ import java.util.List;
 public interface IUserService {
     UserDto createUser(UserDto dto);
 
-    ResponseDto deleteUser(Integer userId);
+    ResponseDto<Integer> deleteUser(Integer userId);
 
     List<UserDto> getAllUsers();
 }

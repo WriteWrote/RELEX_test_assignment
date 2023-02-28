@@ -16,8 +16,8 @@ public interface ITransactionService {
                                                   TransactionDto exchangeFrom,
                                                   TransactionDto exchangeTo);
 
-    List<TransactionDto> getUserTransactionHistory(Integer requestingUserId, Integer userId);
+    ResponseDto<List<TransactionDto>> getUserTransactionHistory(Integer requestingUserId, Integer userId);
 
-    List<TransactionDto> getAllTransactions(Integer requestingUserId);
+    ResponseDto<List<TransactionDto>> getAllTransactions(Integer requestingUserId);
 
 }

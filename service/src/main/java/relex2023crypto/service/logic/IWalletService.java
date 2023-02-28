@@ -6,13 +6,16 @@ import relex2023crypto.service.model.WalletDto;
 import java.util.List;
 
 public interface IWalletService {
-    WalletDto getWalletById(Integer requestingUserId,
-                            Integer walletId);
+    ResponseDto<WalletDto> getWalletById(Integer requestingUserId,
+                                         Integer walletId);
 
-    ResponseDto deleteWalletById(Integer requestingUserId,
-                                 Integer walletID);
-    ResponseDto createWallet(WalletDto dto);
-    List<WalletDto> getUserWallets(Integer userId);
+    ResponseDto<Integer> deleteWalletById(Integer requestingUserId,
+                                          Integer walletID);
 
-    List<WalletDto> getAll(Integer requestingUserId);
+    ResponseDto<Integer> createWallet(WalletDto dto);
+
+    ResponseDto<List<WalletDto>> getUserWallets(Integer requestingUserId,
+                                                Integer userId);
+
+    ResponseDto<List<WalletDto>> getAll(Integer requestingUserId);
 }

@@ -37,31 +37,33 @@ public class CurrencyService implements ICurrencyService {
     }
 
     @Override
-    public CurrencyDto createCurrency(Integer requestingUserId, CurrencyDto dto) {
+    public ResponseDto<CurrencyDto> createCurrency(Integer requestingUserId, CurrencyDto dto) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested creating a new currency by user {}, access: {}",
                 requestingUserId, access);
 
         if (!access)
-            return null;
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins");
 
-        return Optional.of(dto)
-                .map(map::toEntity)
-                .map(rep::save)
-                .map(map::fromEntity)
-                .orElseThrow();
+        return new ResponseDto<>("Operation succeeded",
+                Optional.of(dto)
+                        .map(map::toEntity)
+                        .map(rep::save)
+                        .map(map::fromEntity)
+                        .orElseThrow());
     }
 
     @Override
-    public ResponseDto deleteCurrencyById(Integer requestingUserId, Integer currencyId) {
+    public ResponseDto<Integer> deleteCurrencyById(Integer requestingUserId, Integer currencyId) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested deleting currency {} by user {}, access: {}",
                 currencyId, requestingUserId, access);
         if (!access)
-            return new ResponseDto("Operation denied");
+            return new ResponseDto<>("Operation denied");
 
         rep.deleteById(currencyId);
 
-        return new ResponseDto("Currency {} was successfully deleted", currencyId);
+        return new ResponseDto<Integer>("Currency {} was successfully deleted", currencyId);
     }
 }

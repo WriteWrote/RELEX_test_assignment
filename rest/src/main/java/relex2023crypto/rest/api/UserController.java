@@ -18,17 +18,19 @@ public class UserController {
     public UserController(UserService service) {
         this.service = service;
     }
+
     @PostMapping("/new")
-    public UserDto createUser(@RequestBody UserDto dto){
+    public UserDto createUser(@RequestBody UserDto dto) {
         return service.createUser(dto);
     }
+
     @DeleteMapping("/delete/{userId}")
-    public ResponseDto deleteUser(@PathVariable Integer userId){
+    public ResponseDto<Integer> deleteUser(@PathVariable Integer userId) {
         return service.deleteUser(userId);
     }
 
     @GetMapping("/all")
-    public List<UserDto> getAllUsers(){
+    public List<UserDto> getAllUsers() {
         return service.getAllUsers();
     }
 }

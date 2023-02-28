@@ -144,28 +144,37 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public List<TransactionDto> getUserTransactionHistory(Integer requestingUserId, Integer userId) {
-        logger.info("Requested user {} transaction history by user {}",
-                userId, requestingUserId);
+    public ResponseDto<List<TransactionDto>> getUserTransactionHistory(Integer requestingUserId, Integer userId) {
+        Boolean access = provider.checkAccessByUserId(requestingUserId);
+        logger.info("Requested user {} transaction history by user {}, access {}",
+                userId, requestingUserId, access);
 
-        return Optional.of(transactionRepository.findAllByUserId(userId))
-                .map(transactionMapper::fromEntities)
-                .orElseThrow();
+        if (!access) {
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins or user itself");
+        }
+
+        return new ResponseDto<>("Operation succeded",
+                Optional.of(transactionRepository.findAllByUserId(userId))
+                        .map(transactionMapper::fromEntities)
+                        .orElseThrow());
 
     }
 
     @Override
-    public List<TransactionDto> getAllTransactions(Integer requestingUserId) {
+    public ResponseDto<List<TransactionDto>> getAllTransactions(Integer requestingUserId) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested all transactions by user {}, access: {}",
                 requestingUserId, access);
 
-        if (!access){
-            return null;
+        if (!access) {
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins");
         }
 
-        return Optional.of(transactionRepository.findAll())
-                .map(transactionMapper::fromEntities)
-                .orElseThrow();
+        return new ResponseDto<>("Operation succeeded",
+                Optional.of(transactionRepository.findAll())
+                        .map(transactionMapper::fromEntities)
+                        .orElseThrow());
     }
 }

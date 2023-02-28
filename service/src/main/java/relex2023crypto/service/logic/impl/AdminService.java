@@ -27,49 +27,52 @@ public class AdminService implements IAdminService {
         this.map = map;
         this.provider = provider;
     }
+
     @Override
-    public AdminDto createAdmin(Integer requestingUserId, AdminDto dto) {
+    public ResponseDto<AdminDto> createAdmin(Integer requestingUserId, AdminDto dto) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested creating new admin by {}, access: {}",
                 requestingUserId, access);
 
         if (!access) {
-            return null; //todo: figure out how to insert there Response
-                         // normally I would just responded with ResponseDto
-                         // with specific message, but the description of API in
-                         // the doc with the task description obliged me to return
-                         // secretKey when creating new user, so I'm returning the whole AdminDto
+            return new ResponseDto<>("Operation denied due to access restriction." +
+                    "This operation is only available for admins");
         }
 
-        return Optional.of(dto)
-                .map(map::ToEntity)
-                .map(rep::save)
-                .map(map::fromEntity)
-                .orElseThrow();
+
+        return new ResponseDto<AdminDto>("Operation succeeded",
+                Optional.of(dto)
+                        .map(map::ToEntity)
+                        .map(rep::save)
+                        .map(map::fromEntity)
+                        .orElseThrow());
     }
 
     @Override
-    public ResponseDto deleteAdmin(Integer requestingUserId, Integer adminId) {
+    public ResponseDto<Integer> deleteAdmin(Integer requestingUserId, Integer adminId) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested deleting admin {} by user {}, access: {}",
                 adminId, requestingUserId, access);
-        if (!access){
-            return new ResponseDto("Operation denied");
+        if (!access) {
+            return new ResponseDto<>("Operation denied due to access restriction." +
+                    "This operation is only available for admins");
         }
         rep.deleteById(adminId);
-        return new ResponseDto("Admin {} was successfully deleted", adminId);
+        return new ResponseDto<Integer>("Admin {} was successfully deleted", adminId);
     }
 
     @Override
-    public List<AdminDto> getAllAdmins(Integer requestingUserId) {
+    public ResponseDto<List<AdminDto>> getAllAdmins(Integer requestingUserId) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested all admins info by user {}, access: {}",
                 requestingUserId, access);
-        if (!access){
-            return null;    //todo: same problem here
+        if (!access) {
+            return new ResponseDto<>("Operation denied due to access restriction." +
+                    "This operation is only available for admins");
         }
-        return Optional.of(rep.findAll())
-                .map(map::fromEntities)
-                .orElseThrow();
+        return new ResponseDto<>("Operation succeeded",
+                Optional.of(rep.findAll())
+                        .map(map::fromEntities)
+                        .orElseThrow());
     }
 }

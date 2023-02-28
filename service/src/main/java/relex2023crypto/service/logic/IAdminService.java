@@ -6,9 +6,9 @@ import relex2023crypto.service.model.responses.ResponseDto;
 import java.util.List;
 
 public interface IAdminService {
-    AdminDto createAdmin(Integer requestingUserId, AdminDto dto);
+    ResponseDto<AdminDto> createAdmin(Integer requestingUserId, AdminDto dto);
 
-    ResponseDto deleteAdmin(Integer requestingUserId, Integer adminId);
+    ResponseDto<Integer> deleteAdmin(Integer requestingUserId, Integer adminId);
 
-    List<AdminDto> getAllAdmins(Integer requestingUserId);
+    ResponseDto<List<AdminDto>> getAllAdmins(Integer requestingUserId);
 }

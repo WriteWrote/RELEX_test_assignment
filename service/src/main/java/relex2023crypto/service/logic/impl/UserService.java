@@ -38,11 +38,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public ResponseDto deleteUser(Integer userId) {
+    public ResponseDto<Integer> deleteUser(Integer userId) {
         logger.info("Requested deleting user {}",
                 userId);
         rep.deleteById(userId);
-        return new ResponseDto("Successfully deleted user {}", userId);
+        return new ResponseDto<Integer>("Successfully deleted user {}", userId);
     }
 
     @Override

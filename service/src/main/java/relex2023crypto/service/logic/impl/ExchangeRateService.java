@@ -10,6 +10,7 @@ import relex2023crypto.service.logic.IExchangeRateService;
 import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.IExchangeRateMapper;
 import relex2023crypto.service.model.ExchangeRateDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,17 +47,21 @@ public class ExchangeRateService implements IExchangeRateService {
     }
 
     @Override
-    public ExchangeRateDto modifyExchangeRateById(Integer requestingUserId, ExchangeRateDto dto) {
+    public ResponseDto<ExchangeRateDto> modifyExchangeRateById(Integer requestingUserId, ExchangeRateDto dto) {
         Boolean access = provider.checkAccessByUserId(requestingUserId);
         logger.info("Requested modifying the currency exchange rate ({} - {}) by user {}, access: {}",
                 dto.getCurrency_id1(), dto.getCurrency_id2(), requestingUserId, access);
         if (!access) {
-            return null;
+            return new ResponseDto<>("Operation denied  due to access restriction." +
+                    "This operation is only available for admins");
         }
+
         ExchangeRateEntity newEntity = map.merge(dto, rep.findByCurrency1AndCurrency2(dto.getCurrency_id1(),
                 dto.getCurrency_id2()));
-        return Optional.of(rep.save(newEntity))
+
+        return new ResponseDto<>("Operation succeeded",
+                Optional.of(rep.save(newEntity))
                 .map(map::fromEntity)
-                .orElseThrow();
+                .orElseThrow());
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.IExchangeRateService;
 import relex2023crypto.service.model.ExchangeRateDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class ExchangeRateController {
     }
 
     @PostMapping("/modify")
-    public ExchangeRateDto modifyCurrencyExchangeRate(@PathVariable Integer userId,
-                                                      @RequestBody ExchangeRateDto dto){
+    public ResponseDto<ExchangeRateDto> modifyCurrencyExchangeRate(@PathVariable Integer userId,
+                                                                  @RequestBody ExchangeRateDto dto){
         return exchangeRateService.modifyExchangeRateById(userId, dto);
     }
 

@@ -17,10 +17,12 @@ public class AccessProvider {
     }
 
     public boolean checkAccessByUserId(Integer id) {
-        return repository.findAll().contains(id);
+        return repository.existsById(id);
+//        return repository.findAll().contains(id);
     }
 
     public boolean checkAccessByUserSecretKey(String secretKey) {
-        return secretKey.equals(repository.findBySecretKey(secretKey).getSecretKey());
+        return repository.existsBySecretKey(secretKey);
+//        return secretKey.equals(repository.findBySecretKey(secretKey).getSecretKey());
     }
 }

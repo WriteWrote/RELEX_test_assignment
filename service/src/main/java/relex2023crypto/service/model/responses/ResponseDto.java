@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 public class ResponseDto<T> {
     private String message;
     private Boolean success;
-    private T args[];
+    private T[] args;
 
+    @SafeVarargs
     public ResponseDto(String message, Boolean success, T... args) {
         this.message = message;
         this.success = success;
@@ -19,6 +20,7 @@ public class ResponseDto<T> {
         this.success = success;
     }
 
+    @SafeVarargs
     public ResponseDto(String message, T... args) {
         this.message = message;
         this.args = args;
@@ -44,7 +46,8 @@ public class ResponseDto<T> {
         return args;
     }
 
-    public void setArgs(T... args) {
+    @SafeVarargs
+    public final void setArgs(T... args) {
         this.args = args;
     }
 }

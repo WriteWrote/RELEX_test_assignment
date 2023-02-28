@@ -9,8 +9,8 @@ import java.util.List;
 public interface ICurrencyService {
     List<CurrencyDto> getAll();
 
-    CurrencyDto createCurrency(Integer requestingUserId, @Validated CurrencyDto dto);
+    ResponseDto<CurrencyDto> createCurrency(Integer requestingUserId, @Validated CurrencyDto dto);
 
-    ResponseDto deleteCurrencyById(Integer requestingUserId, Integer currencyId);
+    ResponseDto<Integer> deleteCurrencyById(Integer requestingUserId, Integer currencyId);
 
 }

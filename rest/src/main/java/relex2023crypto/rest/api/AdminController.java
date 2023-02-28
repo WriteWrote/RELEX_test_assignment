@@ -20,17 +20,17 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public AdminDto createAdmin(@RequestBody AdminDto dto, @PathVariable Integer requestingUserId){
+    public ResponseDto<AdminDto> createAdmin(@RequestBody AdminDto dto, @PathVariable Integer requestingUserId){
         return service.createAdmin(requestingUserId, dto);
     }
     @DeleteMapping("/delete/{adminId}")
-    public ResponseDto deleteAdmin(@PathVariable Integer requestingUserId,
+    public ResponseDto<Integer> deleteAdmin(@PathVariable Integer requestingUserId,
                                    @PathVariable Integer adminId){
         return service.deleteAdmin(requestingUserId, adminId);
     }
 
     @GetMapping("/all")
-    public List<AdminDto> getAllAdmins(@PathVariable Integer requestingUserId){
+    public ResponseDto<List<AdminDto>> getAllAdmins(@PathVariable Integer requestingUserId){
         return service.getAllAdmins(requestingUserId);
     }
 
