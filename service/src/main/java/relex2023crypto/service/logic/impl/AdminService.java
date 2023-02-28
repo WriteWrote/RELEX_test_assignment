@@ -9,7 +9,7 @@ import relex2023crypto.service.logic.IAdminService;
 import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.IAdminMapper;
 import relex2023crypto.service.model.AdminDto;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 import java.util.Optional;

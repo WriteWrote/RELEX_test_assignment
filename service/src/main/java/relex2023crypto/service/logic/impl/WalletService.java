@@ -9,7 +9,7 @@ import relex2023crypto.db.repositories.WalletRepository;
 import relex2023crypto.service.logic.IWalletService;
 import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.IWalletMapper;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.WalletDto;
 
 import java.util.List;

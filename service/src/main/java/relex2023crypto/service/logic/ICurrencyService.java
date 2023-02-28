@@ -2,7 +2,7 @@ package relex2023crypto.service.logic;
 
 import org.springframework.validation.annotation.Validated;
 import relex2023crypto.service.model.CurrencyDto;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 

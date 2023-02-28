@@ -3,9 +3,8 @@ package relex2023crypto.rest.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ITransactionService;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.TransactionDto;
-import relex2023crypto.service.model.WalletDto;
 
 import java.util.List;
 

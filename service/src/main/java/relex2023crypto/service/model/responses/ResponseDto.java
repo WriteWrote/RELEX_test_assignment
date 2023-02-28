@@ -1,18 +1,17 @@
-package relex2023crypto.service.model;
+package relex2023crypto.service.model.responses;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ResponseDto {
+public class ResponseDto<T> {
     private String message;
-
     private Boolean success;
-    private Integer idArgs[];
+    private T args[];
 
-    public ResponseDto(String message, Boolean success, Integer... idArgs) {
+    public ResponseDto(String message, Boolean success, T... args) {
         this.message = message;
         this.success = success;
-        this.idArgs = idArgs;
+        this.args = args;
     }
 
     public ResponseDto(String message, Boolean success) {
@@ -20,9 +19,9 @@ public class ResponseDto {
         this.success = success;
     }
 
-    public ResponseDto(String message, Integer... idArgs) {
+    public ResponseDto(String message, T... args) {
         this.message = message;
-        this.idArgs = idArgs;
+        this.args = args;
     }
 
     public String getMessage() {
@@ -39,5 +38,13 @@ public class ResponseDto {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public T[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(T... args) {
+        this.args = args;
     }
 }

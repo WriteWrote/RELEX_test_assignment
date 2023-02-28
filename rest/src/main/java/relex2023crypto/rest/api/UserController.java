@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.logic.impl.UserService;
 import relex2023crypto.service.model.UserDto;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 

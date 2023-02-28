@@ -1,8 +1,7 @@
 package relex2023crypto.service.logic;
 
 import relex2023crypto.service.model.AdminDto;
-import relex2023crypto.service.model.ResponseDto;
-import relex2023crypto.service.model.UserDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 

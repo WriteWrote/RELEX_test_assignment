@@ -1,11 +1,10 @@
 package relex2023crypto.rest.api;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ICurrencyService;
 import relex2023crypto.service.model.CurrencyDto;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 

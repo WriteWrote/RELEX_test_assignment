@@ -1,6 +1,5 @@
 package relex2023crypto.service.logic.impl;
 
-import org.aspectj.apache.bcel.classfile.Module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,7 @@ import relex2023crypto.db.repositories.UserRepository;
 import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.IUserMapper;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.UserDto;
 
 import java.util.List;

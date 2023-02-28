@@ -9,7 +9,7 @@ import relex2023crypto.service.logic.ICurrencyService;
 import relex2023crypto.service.logic.utils.AccessProvider;
 import relex2023crypto.service.mapper.ICurrencyMapper;
 import relex2023crypto.service.model.CurrencyDto;
-import relex2023crypto.service.model.ResponseDto;
+import relex2023crypto.service.model.responses.ResponseDto;
 
 import java.util.List;
 import java.util.Optional;
