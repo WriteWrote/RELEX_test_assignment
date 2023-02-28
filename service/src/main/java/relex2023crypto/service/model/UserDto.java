@@ -10,6 +10,7 @@ import relex2023crypto.service.validation.EmailUnique;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class UserDto {
     private Integer id;
 
     @JsonProperty("login")
+    @Pattern(regexp = "^[a-zA-Z\\d]{5,50}$", message = "login.invalid")
     @NotBlank(message = "login.is-blank")
     private String login;
 
