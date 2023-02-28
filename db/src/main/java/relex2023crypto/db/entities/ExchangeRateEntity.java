@@ -14,13 +14,13 @@ public class ExchangeRateEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "currency_id1")
+    @Column(name = "currency_from")
     @NotEmpty(message = "currencyid1 in currencyEntity must not be empty")
-    private Integer currency1;
+    private Integer currencyFrom;
 
-    @Column(name = "currency_id2")
+    @Column(name = "currency_to")
     @NotEmpty(message = "currencyid2 in currencyEntity must not be empty")
-    private Integer currency2;
+    private Integer currencyTo;
 
     @Column(name = "coef")
     @NotEmpty(message = "coef in ExchangeRate must not be empty")
@@ -34,20 +34,20 @@ public class ExchangeRateEntity {
         this.id = id;
     }
 
-    public Integer getCurrency1() {
-        return currency1;
+    public Integer getCurrencyFrom() {
+        return currencyFrom;
     }
 
-    public void setCurrency1(Integer currency1) {
-        this.currency1 = currency1;
+    public void setCurrencyFrom(Integer currency1) {
+        this.currencyFrom = currency1;
     }
 
-    public Integer getCurrency2() {
-        return currency2;
+    public Integer getCurrencyTo() {
+        return currencyTo;
     }
 
-    public void setCurrency2(Integer currency2) {
-        this.currency2 = currency2;
+    public void setCurrencyTo(Integer currency2) {
+        this.currencyTo = currency2;
     }
 
     public Double getCoef() {

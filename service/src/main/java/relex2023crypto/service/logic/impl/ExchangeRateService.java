@@ -33,7 +33,7 @@ public class ExchangeRateService implements IExchangeRateService {
     public ExchangeRateDto getExchangeRateById(Integer first, Integer second) {
         logger.info("Requested exchange rate for currencies: {} - {}",
                 first, second);
-        return Optional.of(rep.findByCurrency1AndCurrency2(first, second))
+        return Optional.of(rep.findByCurrencyFromAndCurrencyTo(first, second))
                 .map(map::fromEntity)
                 .orElseThrow();
     }
@@ -52,14 +52,14 @@ public class ExchangeRateService implements IExchangeRateService {
         Boolean access = provider.checkAdminAccessByUserSecretKey(dto.getRequestingSecretKey());
 
         logger.info("Requested modifying the currency exchange rate ({} - {}) by secret key: {}, access: {}",
-                dto.getCurrency_id1(), dto.getCurrency_id2(), dto.getRequestingSecretKey(), access);
+                dto.getCurrencyFrom(), dto.getCurrencyTo(), dto.getRequestingSecretKey(), access);
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
                     "This operation is only available for admins");
         }
 
-        ExchangeRateEntity newEntity = map.merge(dto, rep.findByCurrency1AndCurrency2(dto.getCurrency_id1(),
-                dto.getCurrency_id2()));
+        ExchangeRateEntity newEntity = map.merge(dto, rep.findByCurrencyFromAndCurrencyTo(dto.getCurrencyFrom(),
+                dto.getCurrencyTo()));
 
         return new ResponseDto<>("Operation succeeded",
                 Optional.of(rep.save(newEntity))

@@ -123,7 +123,7 @@ public class TransactionService implements ITransactionService {
         ResponseDto<WalletDto> responseCashIn = new ResponseDto<>("suspended");
 
         if (responseCashOut.getSuccess()) {
-            Double coef = exchangeRateRepository.findByCurrency1AndCurrency2(exchangeFrom.getCurrencyId(),
+            Double coef = exchangeRateRepository.findByCurrencyFromAndCurrencyTo(exchangeFrom.getCurrencyId(),
                             exchangeTo.getCurrencyId())
                     .getCoef();
             Double exchangedSum = exchangeFrom.getSum() * coef;

@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.Date;
 
 public class ExchangeResponseDto {
-    //todo: когда буду добавлять в таблицу transaction колонку с датой, поменять
-    // все парные колонки с currency1/2 на currencyFrom/To
     private Integer currencyFromId;
     private Double sumFrom;
     private Integer currencyToId;

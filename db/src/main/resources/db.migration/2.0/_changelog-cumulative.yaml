@@ -3,11 +3,11 @@ databaseChangeLog:
       - dbms:
           type: postgresql
   - changeSet:
-      id: TAR-005-280220231140
+      id: TAR-005-280220232048
       author: Ellina Obukhova
       comment: Create full DB Structure
       runOnChange: true
       changes:
         - sqlFile:
-            path: TAR-005-280220231140.sql
+            path: TAR-005-280220232048.sql
             relativeToChangelogFile: true

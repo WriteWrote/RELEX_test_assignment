@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "transactions", schema = "tar2023_crypto")
@@ -33,6 +34,10 @@ public class TransactionEntity {
     @Column(name = "currency_sum")
     @NotEmpty(message = "currencySum in TransactionEntity must not be empty")
     private Double currencySum;
+
+    @Column(name = "date")
+    @NotEmpty(message = "date must not be empty")
+    private Date date;
 
     @Column(name = "message")
     @NotEmpty(message = "additional message in TransactionEntity must not be empty")
@@ -76,5 +81,21 @@ public class TransactionEntity {
 
     public void setWalletId(Integer walletId) {
         this.walletId = walletId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -1,22 +1,19 @@
 package relex2023crypto.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @RequiredArgsConstructor
 public class ExchangeRateDto {
     @JsonProperty("currency1")
     @NotNull()
-    private Integer currency_id1;
+    private Integer currencyFrom;
 
     @JsonProperty("currency2")
     @NotNull
-    private Integer currency_id2;
+    private Integer currencyTo;
 
     @JsonProperty("coef")
     @NotNull
@@ -26,16 +23,16 @@ public class ExchangeRateDto {
     @NotNull
     private String requestingSecretKey;
 
-    public Integer getCurrency_id1() {
-        return currency_id1;
+    public Integer getCurrencyFrom() {
+        return currencyFrom;
     }
 
-    public Integer getCurrency_id2() {
-        return currency_id2;
+    public Integer getCurrencyTo() {
+        return currencyTo;
     }
 
-    public void setCurrency_id2(Integer currency_id2) {
-        this.currency_id2 = currency_id2;
+    public void setCurrencyTo(Integer currencyTo) {
+        this.currencyTo = currencyTo;
     }
 
     public Double getCoef() {
@@ -46,8 +43,8 @@ public class ExchangeRateDto {
         this.coef = coef;
     }
 
-    public void setCurrency_id1(Integer currency_id1) {
-        this.currency_id1 = currency_id1;
+    public void setCurrencyFrom(Integer currencyFrom) {
+        this.currencyFrom = currencyFrom;
     }
 
     public String getRequestingSecretKey() {

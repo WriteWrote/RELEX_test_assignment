@@ -10,6 +10,6 @@ import javax.validation.constraints.NotEmpty;
 @Repository
 public interface ExchangeRateRepository extends CrudRepository<ExchangeRateEntity, Integer>,
         JpaRepository<ExchangeRateEntity, Integer> {
-    ExchangeRateEntity findByCurrency1AndCurrency2(@NotEmpty(message = "currencyid1 in currencyEntity must not be empty") Integer currency1,
+    ExchangeRateEntity findByCurrencyFromAndCurrencyTo(@NotEmpty(message = "currencyid1 in currencyEntity must not be empty") Integer currency1,
                                                    @NotEmpty(message = "currencyid2 in currencyEntity must not be empty") Integer currency2);
 }

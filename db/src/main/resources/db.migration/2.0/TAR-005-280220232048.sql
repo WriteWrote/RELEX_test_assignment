@@ -21,8 +21,8 @@ CREATE TABLE tar2023_crypto.currencies(
 
 CREATE TABLE tar2023_crypto.wallets(
                                        id              SERIAL  PRIMARY KEY ,
-                                       user_id         INTEGER,
-                                       currency_id     INTEGER,
+                                       user_id         INTEGER NOT NULL ,
+                                       currency_id     INTEGER NOT NULL ,
                                        currency_sum    FLOAT  NOT NULL
 );
 
@@ -31,13 +31,14 @@ CREATE TABLE tar2023_crypto.transactions(
                                             user_id         INTEGER NOT NULL ,
                                             currency_id     INTEGER NOT NULL ,
                                             currency_sum    FLOAT NOT NULL,
-                                            wallet_id       INTEGER,
+                                            wallet_id       INTEGER NOT NULL ,
+                                            date            TIMESTAMP NOT NULL ,
                                             message         VARCHAR(15)
 );
 
 CREATE TABLE tar2023_crypto.exchange_rates(
                                               id              SERIAL PRIMARY KEY ,
-                                              currency_id1       INTEGER,
-                                              currency_id2       INTEGER,
-                                              coef            FLOAT
+                                              currency_from   INTEGER NOT NULL ,
+                                              currency_to     INTEGER NOT NULL ,
+                                              coef            FLOAT NOT NULL
 );
