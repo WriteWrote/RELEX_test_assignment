@@ -1,7 +1,6 @@
 # RELEX_test_assignment
 # Биржа
-# Видеопрезентация кратко: [Mock link](https://www.youtube.com/watch?v=oHg5SJYRHA0)
-## Видеопрезентация полностью: [Mock link](https://www.youtube.com/watch?v=oHg5SJYRHA0)
+# Видеопрезентация: [link](https://drive.google.com/drive/folders/18PvWD-rAovmzwYA_kUDcd_sJDYA8fbCu?usp=sharing)
 ***
 ## Краткое описание исходного задания:
 Требуется разработать RESTfull API service — биржу для проведения торгов криптовалютами.
@@ -42,6 +41,11 @@
 > Workspace Id: 666c2991-2828-445d-aa44-1e1a945e3391
 >
 > Workspace Name: CryptoTrade_Relex2023
+> 
+> Воркспейс выглядит следующим образом:
+> 
+> <img src="_screenshots/img_28.png" width="300">
+
 - кастомные валидаторы для почты и логина (@EmailUnique, @LoginUnique)
 - логгер SLF4J для вывода сообщений о запрошенных операциях в консоль
 - безопасность простейшим способом (через проверку secretKey)
