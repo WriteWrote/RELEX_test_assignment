@@ -10,7 +10,6 @@ repositories {
 }
 
 dependencies {
-
     annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.4.31.Final'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.2'
     runtimeOnly 'org.postgresql:postgresql:42.2.23'

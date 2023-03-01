@@ -12,7 +12,7 @@ repositories {
 dependencies {
 
     implementation 'org.springframework:spring-webmvc:5.3.9'
-    implementation 'org.springframework.security:spring-security-core:5.5.1'
+//    implementation 'org.springframework.security:spring-security-core:5.5.1'
     implementation 'org.projectlombok:lombok:1.18.20'
     implementation(project(":service"))
     implementation 'org.slf4j:slf4j-api:1.7.31'

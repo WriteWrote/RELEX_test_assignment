@@ -4,7 +4,6 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-
 @Documented
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -15,5 +14,4 @@ public @interface EmailUnique {
     Class<? extends Payload>[] payload() default {};
 
     Class<?>[] groups() default {};
-
 }

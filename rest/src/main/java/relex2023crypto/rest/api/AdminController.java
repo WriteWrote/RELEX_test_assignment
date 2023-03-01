@@ -34,6 +34,4 @@ public class AdminController {
     public ResponseDto<List<AdminDto>> getAllAdmins(@PathVariable Integer requestingUserId){
         return service.getAllAdmins(requestingUserId);
     }
-
-
 }

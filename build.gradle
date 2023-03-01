@@ -4,7 +4,6 @@ plugins {
 }
 
 allprojects {
-
     apply plugin: 'java'
 
     group 'relex2023crypto'

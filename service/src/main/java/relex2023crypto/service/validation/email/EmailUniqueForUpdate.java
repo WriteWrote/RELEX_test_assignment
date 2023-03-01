@@ -18,7 +18,7 @@ public class EmailUniqueForUpdate implements ConstraintValidator<EmailUnique, Us
 
     @Override
     public boolean isValid(UserDto value, ConstraintValidatorContext context) {
-        if (value == null || value.getId() == null || value.getEmail() == null) {
+        if (value == null || value.getId() == null && value.getEmail() == null) {
             return true;
         }
 
