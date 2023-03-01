@@ -2,18 +2,23 @@ package relex2023crypto.service.logic.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import relex2023crypto.db.entities.TransactionEntity;
-import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.entities.WalletEntity;
+
 import relex2023crypto.db.repositories.ExchangeRateRepository;
 import relex2023crypto.db.repositories.TransactionRepository;
 import relex2023crypto.db.repositories.WalletRepository;
+
 import relex2023crypto.service.logic.ITransactionService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
+
 import relex2023crypto.service.mapper.ITransactionMapper;
 import relex2023crypto.service.mapper.IWalletMapper;
+
 import relex2023crypto.service.model.requests.DateGapRequest;
 import relex2023crypto.service.model.requests.ExchangeRequest;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
@@ -21,7 +26,6 @@ import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.TransactionDto;
 import relex2023crypto.service.model.WalletDto;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +74,7 @@ public class TransactionService implements ITransactionService {
 
         walletRepository.save(walletMapper.merge(newWallet, originalWallet));
 
-        return new ResponseDto<WalletDto>("Operation succeeded", Boolean.TRUE, newWallet);
+        return new ResponseDto<WalletDto>("Operation succeeded", true, newWallet);
     }
 
     private ResponseDto<WalletDto> cashIn(Integer walletId, Double sum) {
@@ -85,7 +89,7 @@ public class TransactionService implements ITransactionService {
 
         walletRepository.save(walletMapper.merge(newWallet, originalWallet));
 
-        return new ResponseDto<WalletDto>("Operation succeeded", Boolean.TRUE, newWallet);
+        return new ResponseDto<WalletDto>("Operation succeeded", true, newWallet);
     }
 
     @Override
@@ -141,9 +145,8 @@ public class TransactionService implements ITransactionService {
 
         if (responseCashOut.getSuccess()) {
             Double coef = exchangeRateRepository.findByCurrencyFromAndCurrencyTo(dto.getCurrencyId(),
-                            dto.getCurrencyToId()).getCoef();
+                    dto.getCurrencyToId()).getCoef();
             Double exchangedSum = dto.getSum() * coef;
-//          exchangeTo.setSum(exchangedSum);
 
             entityFrom = transactionMapper.toEntity(dto);
             entityFrom.setMessage("out");
@@ -169,8 +172,7 @@ public class TransactionService implements ITransactionService {
                 responseCashIn.getArgs()[0].getSum(),
                 dto.getDate());
 
-        return new ResponseDto<ExchangeResponseDto>(responseCashOut.getMessage() + "\n"
-                + responseArgs);
+        return new ResponseDto<>(responseCashOut.getMessage(), true, responseArgs);
     }
 
     @Override
@@ -181,10 +183,10 @@ public class TransactionService implements ITransactionService {
 
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins or user itself");
+                    "This operation is only available for admins or user itself", false);
         }
 
-        return new ResponseDto<>("Operation succeded",
+        return new ResponseDto<>("Operation succeded", true,
                 Optional.of(transactionRepository.findAllByUserId(userId))
                         .map(transactionMapper::fromEntities)
                         .orElseThrow());
@@ -199,10 +201,10 @@ public class TransactionService implements ITransactionService {
 
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(transactionRepository.findAll())
                         .map(transactionMapper::fromEntities)
                         .orElseThrow());
@@ -215,12 +217,12 @@ public class TransactionService implements ITransactionService {
         logger.info("Requested transactions in time gap {} - {} by secret key {}, access: {}",
                 dto.getDateFrom(), dto.getDateTo(), dto.getSecretKey(), access);
 
-        if(!access){
+        if (!access) {
             return new ResponseDto<>("Operation denied due to access restrictions. " +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
-        return new ResponseDto<List<TransactionDto>>("Operation succeeded", true,
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(transactionRepository.findAllByDateBetween(dto.getDateFrom(), dto.getDateTo()))
                         .map(transactionMapper::fromEntities)
                         .orElseThrow());

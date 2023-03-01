@@ -2,15 +2,21 @@ package relex2023crypto.service.logic.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.entities.WalletEntity;
+
 import relex2023crypto.db.repositories.UserRepository;
 import relex2023crypto.db.repositories.WalletRepository;
+
 import relex2023crypto.service.logic.IWalletService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
+
 import relex2023crypto.service.mapper.IWalletMapper;
+
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.WalletDto;
 import relex2023crypto.service.model.SecretKeyDto;
@@ -48,9 +54,9 @@ public class WalletService implements IWalletService {
                 walletId, requestingUserId, access);
         if (!(access)) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins or user owning the wallet");
+                    "This operation is only available for admins or user owning the wallet", false);
         }
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 rep.findById(walletId)
                         .map(map::fromEntity)
                         .orElseThrow());
@@ -65,7 +71,7 @@ public class WalletService implements IWalletService {
             return new ResponseDto<>("Operation denied  due to access restriction." +
                     "This operation is only available for admins or user owning wallet {}", walletID);
         rep.deleteById(walletID);
-        return new ResponseDto<Integer>("Wallet {} was successfully deleted", walletID);
+        return new ResponseDto<>("Wallet {} was successfully deleted", true, walletID);
     }
 
     @Override
@@ -75,7 +81,7 @@ public class WalletService implements IWalletService {
         WalletEntity wallet = map.toEntity(dto);
         wallet.setUser(userRepository.getById(dto.getUserId()));
         rep.save(wallet);
-        return new ResponseDto<Integer>("Wallet {} in currency {} by user {} was created successfully",
+        return new ResponseDto<Integer>("Wallet {} in currency {} by user {} was created successfully", true,
                 dto.getId(), dto.getCurrencyId(), dto.getUserId());
     }
 
@@ -86,7 +92,7 @@ public class WalletService implements IWalletService {
         logger.info("Requested all user {} wallets with secretKey {}",
                 user.getId(), dto.getSecretKey());
 
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(rep.findAllByUserId(user.getId()))
                         .map(map::fromEntities)
                         .orElseThrow());
@@ -101,10 +107,10 @@ public class WalletService implements IWalletService {
 
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(rep.findAll())
                         .map(map::fromEntities)
                         .orElseThrow());

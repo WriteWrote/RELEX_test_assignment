@@ -2,16 +2,22 @@ package relex2023crypto.service.logic.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
+
 import relex2023crypto.db.entities.AdminEntity;
+
 import relex2023crypto.db.repositories.AdminRepository;
+
 import relex2023crypto.service.logic.IAdminService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
+
 import relex2023crypto.service.mapper.IAdminMapper;
 import relex2023crypto.service.model.AdminDto;
+
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.SecretKeyDto;
 
@@ -21,7 +27,7 @@ import java.util.Optional;
 @Service
 public class AdminService implements IAdminService {
     private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
-    private static final String PASSWORD = "42";
+    private final String PASSWORD = "42";
     private final String SALT = "34";
     private final AdminAccessProvider provider;
     private final AdminRepository rep;
@@ -42,7 +48,7 @@ public class AdminService implements IAdminService {
 
         if (!access) {
             return new ResponseDto<>("Operation denied due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
         TextEncryptor encryptor = Encryptors.text(PASSWORD, SALT);
@@ -53,8 +59,7 @@ public class AdminService implements IAdminService {
 
         rep.save(entity);
 
-        return new ResponseDto<>("Operation succeeded",
-                new SecretKeyDto(encryptedText));
+        return new ResponseDto<>("Operation succeeded", true, new SecretKeyDto(encryptedText));
     }
 
     @Override
@@ -64,10 +69,10 @@ public class AdminService implements IAdminService {
                 adminId, requestingUserId, access);
         if (!access) {
             return new ResponseDto<>("Operation denied due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
         rep.deleteById(adminId);
-        return new ResponseDto<Integer>("Admin {} was successfully deleted", adminId);
+        return new ResponseDto<>("Admin {} was successfully deleted", true, adminId);
     }
 
     @Override
@@ -77,9 +82,9 @@ public class AdminService implements IAdminService {
                 requestingUserId, access);
         if (!access) {
             return new ResponseDto<>("Operation denied due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(rep.findAll())
                         .map(map::fromEntities)
                         .orElseThrow());

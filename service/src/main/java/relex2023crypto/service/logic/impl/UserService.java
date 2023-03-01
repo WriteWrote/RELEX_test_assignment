@@ -2,14 +2,19 @@ package relex2023crypto.service.logic.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
+
 import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.repositories.UserRepository;
+
 import relex2023crypto.service.logic.IUserService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
+
 import relex2023crypto.service.mapper.IUserMapper;
+
 import relex2023crypto.service.model.requests.CreateUserDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.UserDto;
@@ -21,7 +26,7 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    private static final String PASSWORD = "34";
+    private final String PASSWORD = "34";
     private final String SALT = "42";
     private final AdminAccessProvider provider;
     private final UserRepository rep;
@@ -53,7 +58,7 @@ public class UserService implements IUserService {
         logger.info("Requested deleting user {}",
                 userId);
         rep.deleteById(userId);
-        return new ResponseDto<Integer>("Successfully deleted user {}", userId);
+        return new ResponseDto<>("Successfully deleted user {}", true, userId);
     }
 
     @Override

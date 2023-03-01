@@ -2,13 +2,18 @@ package relex2023crypto.service.logic.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import relex2023crypto.db.entities.ExchangeRateEntity;
 import relex2023crypto.db.repositories.ExchangeRateRepository;
+
 import relex2023crypto.service.logic.IExchangeRateService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
+
 import relex2023crypto.service.mapper.IExchangeRateMapper;
+
 import relex2023crypto.service.model.requests.ExchangeRateDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 
@@ -45,12 +50,12 @@ public class ExchangeRateService implements IExchangeRateService {
                 dto.getRequestingSecretKey(), access);
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
         ExchangeRateEntity entity = map.toEntity(dto);
         rep.save(entity);
-        return new ResponseDto<>("Operation succeeded");
+        return new ResponseDto<>("Operation succeeded", true);
     }
 
     @Override
@@ -60,11 +65,12 @@ public class ExchangeRateService implements IExchangeRateService {
                 requestingUser, access);
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
         rep.deleteById(rateId);
-        return new ResponseDto<>("Operation succeeded");
+        return new ResponseDto<>("Operation succeeded", true);
     }
+
     @Override
     public List<ExchangeRateDto> getAll() {
         logger.info("Requested all exchange rates");
@@ -81,13 +87,13 @@ public class ExchangeRateService implements IExchangeRateService {
                 dto.getCurrencyFrom(), dto.getCurrencyTo(), dto.getRequestingSecretKey(), access);
         if (!access) {
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
         ExchangeRateEntity newEntity = map.merge(dto, rep.findByCurrencyFromAndCurrencyTo(dto.getCurrencyFrom(),
                 dto.getCurrencyTo()));
 
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(rep.save(newEntity))
                         .map(map::fromEntity)
                         .orElseThrow());

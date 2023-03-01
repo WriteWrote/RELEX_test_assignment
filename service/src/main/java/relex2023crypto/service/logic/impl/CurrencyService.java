@@ -2,14 +2,19 @@ package relex2023crypto.service.logic.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import relex2023crypto.db.entities.WalletEntity;
 import relex2023crypto.db.repositories.CurrencyRepository;
 import relex2023crypto.db.repositories.WalletRepository;
+
 import relex2023crypto.service.logic.ICurrencyService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
+
 import relex2023crypto.service.mapper.ICurrencyMapper;
+
 import relex2023crypto.service.model.CurrencyDto;
 import relex2023crypto.service.model.responses.CurrencySumDto;
 import relex2023crypto.service.model.responses.ResponseDto;
@@ -24,7 +29,6 @@ public class CurrencyService implements ICurrencyService {
     private final AdminAccessProvider provider;
     private final CurrencyRepository rep;
     private final ICurrencyMapper map;
-
     private final WalletRepository walletRepository;
 
     @Autowired
@@ -51,7 +55,7 @@ public class CurrencyService implements ICurrencyService {
 
         if (!access)
             return new ResponseDto<>("Operation denied  due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
 
         return new ResponseDto<>("Operation succeeded",
                 Optional.of(dto)
@@ -67,11 +71,11 @@ public class CurrencyService implements ICurrencyService {
         logger.info("Requested deleting currency {} by user {}, access: {}",
                 currencyId, requestingUserId, access);
         if (!access)
-            return new ResponseDto<>("Operation denied");
+            return new ResponseDto<>("Operation denied", false);
 
         rep.deleteById(currencyId);
 
-        return new ResponseDto<Integer>("Currency {} was successfully deleted", currencyId);
+        return new ResponseDto<Integer>("Currency {} was successfully deleted", true, currencyId);
     }
 
     @Override
@@ -83,7 +87,7 @@ public class CurrencyService implements ICurrencyService {
 
         if (!access) {
             return new ResponseDto<>("Operation denied due to access restriction." +
-                    "This operation is only available for admins");
+                    "This operation is only available for admins", false);
         }
 
         List<WalletEntity> wallets = walletRepository.findAllByCurrencyId(currencyId);
@@ -95,6 +99,6 @@ public class CurrencyService implements ICurrencyService {
 
         CurrencySumDto responseArg = new CurrencySumDto(rep.getById(currencyId).getCurrencyName(), sum);
 
-        return new ResponseDto<>("Operation succeeded", responseArg);
+        return new ResponseDto<>("Operation succeeded", true,responseArg);
     }
 }
