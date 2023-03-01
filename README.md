@@ -29,7 +29,7 @@
 - JPA (JpaRepository) для гибких запросов в бд
 - WebMVC
 - Mapstruct
-- Validators
+- JavaX Validators
 - Lombok (@RequiresArgsConstructor, @Getter/@Setter)
 - SpringSecurity.TextEncryptor (для генерации строки по некоторому уникальному полю приходящего дто)
 
@@ -44,6 +44,7 @@
 > Workspace Name: CryptoTrade_Relex2023
 - кастомные валидаторы для почты и логина (@EmailUnique, @LoginUnique)
 - логгер SLF4J для вывода сообщений о запрошенных операциях в консоль
+- безопасность простейшим способом (через проверку secretKey)
 
 ***
 
@@ -108,7 +109,7 @@
 
 - все обменные к-ты
 
-<img src="_screenshots/img_12.png" width="600">
+<img src="_screenshots/img_12.png" width="300">
 
 - изменить обменный к-т
 
