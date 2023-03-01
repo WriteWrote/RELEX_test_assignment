@@ -39,6 +39,7 @@ public class CurrencyController {
 
     @GetMapping("/{currencyId}/sum")
     public ResponseDto<CurrencySumDto> checkCurrencySum(@PathVariable Integer currencyId,
+//                                                        @PathVariable Integer requestingUserId,
                                                         @RequestBody SecretKeyDto dto){
         return service.checkCurrencySum(currencyId, dto);
     }

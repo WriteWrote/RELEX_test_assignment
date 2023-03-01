@@ -22,7 +22,7 @@ public interface IWalletMapper {
     List<WalletDto> fromEntities(Iterable<WalletEntity> entities);
 
     @Mapping(target = "currencySum", source = "sum")
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "currencyId", source = "currencyId")
+//    @Mapping(target = "id", source = "id")
+//    @Mapping(target = "currencyId", source = "currencyId")
     WalletEntity merge(WalletDto dto, @MappingTarget WalletEntity entity);
 }

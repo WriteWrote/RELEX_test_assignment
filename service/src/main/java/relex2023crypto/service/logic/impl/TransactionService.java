@@ -20,6 +20,7 @@ import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.TransactionDto;
 import relex2023crypto.service.model.WalletDto;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,9 @@ public class TransactionService implements ITransactionService {
     private ResponseDto<WalletDto> cashOut(Integer walletId, Double sum) {
         WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(walletId));
 
+        WalletEntity originalWallet = walletMapper.toEntity(newWallet);
+        originalWallet.setUser(walletRepository.getById(walletId).getUser());
+
         if (newWallet.getSum() >= sum) {
             logger.info("Operation succeeded");
             Double newSum = newWallet.getSum() - sum;
@@ -63,9 +67,7 @@ public class TransactionService implements ITransactionService {
                     newWallet);
         }
 
-        // todo: weird shit is going over there
-        WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(walletId));
-        walletRepository.save(newEntity);
+        walletRepository.save(walletMapper.merge(newWallet, originalWallet));
 
         return new ResponseDto<WalletDto>("Operation succeeded", Boolean.TRUE, newWallet);
     }
@@ -73,12 +75,14 @@ public class TransactionService implements ITransactionService {
     private ResponseDto<WalletDto> cashIn(Integer walletId, Double sum) {
         WalletDto newWallet = walletMapper.fromEntity(walletRepository.getById(walletId));
 
+        WalletEntity originalWallet = walletMapper.toEntity(newWallet);
+        originalWallet.setUser(walletRepository.getById(walletId).getUser());
+
         logger.info("Operation succeeded");
         Double newSum = newWallet.getSum() + sum;
         newWallet.setSum(newSum);
 
-        WalletEntity newEntity = walletMapper.merge(newWallet, walletRepository.getById(walletId));
-        walletRepository.save(newEntity);
+        walletRepository.save(walletMapper.merge(newWallet, originalWallet));
 
         return new ResponseDto<WalletDto>("Operation succeeded", Boolean.TRUE, newWallet);
     }
@@ -94,7 +98,10 @@ public class TransactionService implements ITransactionService {
             dto.setMessage("denied");
         }
 
-        transactionRepository.save(transactionMapper.toEntity(dto));
+        TransactionEntity entity = transactionMapper.toEntity(dto);
+        entity.setUser(walletRepository.getById(dto.getWalletId()).getUser());
+
+        transactionRepository.save(entity);
 
         return response;
     }
@@ -106,7 +113,10 @@ public class TransactionService implements ITransactionService {
 
         ResponseDto<WalletDto> response = cashIn(dto.getWalletId(), dto.getSum());
 
-        transactionRepository.save(transactionMapper.toEntity(dto));
+        TransactionEntity entity = transactionMapper.toEntity(dto);
+        entity.setUser(walletRepository.getById(dto.getWalletId()).getUser());
+
+        transactionRepository.save(entity);
 
         return response;
     }
