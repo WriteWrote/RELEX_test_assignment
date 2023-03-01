@@ -13,8 +13,8 @@ public class DateGapRequest {
     @JsonProperty("secret_key")
     private String secretKey;
 
-    public DateGapRequest(@JsonProperty("date_from")Date dateFrom,
-                          @JsonProperty("date_to")Date dateTo,
+    public DateGapRequest(@JsonProperty("date_from") Date dateFrom,
+                          @JsonProperty("date_to") Date dateTo,
                           @JsonProperty("secret_key") String secretKey) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;

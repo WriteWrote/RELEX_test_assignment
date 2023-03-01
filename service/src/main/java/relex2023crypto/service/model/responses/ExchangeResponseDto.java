@@ -1,7 +1,5 @@
 package relex2023crypto.service.model.responses;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.Date;
 
 public class ExchangeResponseDto {

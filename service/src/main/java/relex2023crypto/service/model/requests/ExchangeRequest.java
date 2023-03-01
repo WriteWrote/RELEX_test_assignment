@@ -14,6 +14,7 @@ public class ExchangeRequest extends TransactionDto {
     @JsonProperty("currency_to_id")
     @NotNull
     private Integer currencyToId;
+
     public Integer getWalletToId() {
         return walletToId;
     }
@@ -29,6 +30,4 @@ public class ExchangeRequest extends TransactionDto {
     public void setCurrencyToId(Integer currencyToId) {
         this.currencyToId = currencyToId;
     }
-
-
 }
