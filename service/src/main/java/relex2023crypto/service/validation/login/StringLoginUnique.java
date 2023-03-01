@@ -7,7 +7,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class StringLoginUnique implements ConstraintValidator<LoginUnique, String> {
-
     private final UserRepository userRepository;
 
     @Autowired

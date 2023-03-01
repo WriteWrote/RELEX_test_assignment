@@ -1,9 +1,9 @@
 package relex2023crypto.service.validation.login;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.*;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
 
 @Documented
 @Target({ElementType.FIELD, ElementType.TYPE})

@@ -8,7 +8,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class LoginUniqueForUpdate implements ConstraintValidator<LoginUnique, UserDto> {
-
     private final UserRepository userRepository;
 
     @Autowired
