@@ -3,6 +3,5 @@ databaseChangeLog:
       - dbms:
           type: postgresql
   - include:
-#      file: 1.0/_changelog-cumulative.yaml   comment: moving to all patched at once version of db script
       file: 2.0/_changelog-cumulative.yaml
       relativeToChangelogFile: true

@@ -3,7 +3,6 @@ package relex2023crypto.db.entities;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "exchange_rates", schema = "tar2023_crypto")

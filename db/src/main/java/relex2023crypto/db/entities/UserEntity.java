@@ -1,6 +1,5 @@
 package relex2023crypto.db.entities;
 
-import liquibase.pro.packaged.C;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;

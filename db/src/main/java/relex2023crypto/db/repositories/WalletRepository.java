@@ -12,5 +12,6 @@ import java.util.List;
 @Repository
 public interface WalletRepository extends CrudRepository<WalletEntity, Integer>, JpaRepository<WalletEntity, Integer> {
     List<WalletEntity> findAllByUserId(@NotNull Integer user_id);
+
     List<WalletEntity> findAllByCurrencyId(@NotEmpty(message = "currencyId in WalletEntity must not be empty") Integer currencyId);
 }

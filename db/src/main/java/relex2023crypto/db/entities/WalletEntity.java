@@ -3,9 +3,7 @@ package relex2023crypto.db.entities;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "wallets", schema = "tar2023_crypto")
