@@ -1,6 +1,5 @@
 package relex2023crypto.service.mapper;
 
-import org.hibernate.annotations.Target;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import relex2023crypto.db.entities.AdminEntity;
@@ -11,7 +10,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface IAdminMapper {
     AdminDto fromEntity(AdminEntity entity);
+
     @Mapping(target = "secretKey", ignore = true)
     AdminEntity ToEntity(AdminDto dto);
+
     List<AdminDto> fromEntities(Iterable<AdminEntity> entities);
 }

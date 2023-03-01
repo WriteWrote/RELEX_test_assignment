@@ -6,8 +6,7 @@ import org.mapstruct.MappingTarget;
 import relex2023crypto.db.entities.WalletEntity;
 import relex2023crypto.service.model.WalletDto;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.List;;
 
 @Mapper(componentModel = "spring")
 public interface IWalletMapper {
@@ -22,7 +21,5 @@ public interface IWalletMapper {
     List<WalletDto> fromEntities(Iterable<WalletEntity> entities);
 
     @Mapping(target = "currencySum", source = "sum")
-//    @Mapping(target = "id", source = "id")
-//    @Mapping(target = "currencyId", source = "currencyId")
     WalletEntity merge(WalletDto dto, @MappingTarget WalletEntity entity);
 }

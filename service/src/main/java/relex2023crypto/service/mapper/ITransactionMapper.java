@@ -13,7 +13,6 @@ public interface ITransactionMapper {
     @Mapping(target = "secretKey", source = "user.secretKey")
     TransactionDto fromEntity(TransactionEntity entity);
 
-
     @Mapping(target = "currencySum", source = "sum")
     @Mapping(target = "user", ignore = true)
     TransactionEntity toEntity(TransactionDto dto);
