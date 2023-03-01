@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.IWalletService;
 import relex2023crypto.service.model.WalletDto;
 import relex2023crypto.service.model.responses.ResponseDto;
-import relex2023crypto.service.model.responses.SecretKeyDto;
+import relex2023crypto.service.model.SecretKeyDto;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("users/{requestingUserId}/cash")
+@RequestMapping("/users/{requestingUserId}/cash")
 public class WalletController {
     private final IWalletService walletService;
 

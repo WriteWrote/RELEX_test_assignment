@@ -13,7 +13,7 @@ import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IWalletMapper;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.WalletDto;
-import relex2023crypto.service.model.responses.SecretKeyDto;
+import relex2023crypto.service.model.SecretKeyDto;
 
 import java.util.List;
 import java.util.Objects;

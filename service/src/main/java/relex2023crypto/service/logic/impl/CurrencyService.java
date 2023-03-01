@@ -13,7 +13,7 @@ import relex2023crypto.service.mapper.ICurrencyMapper;
 import relex2023crypto.service.model.CurrencyDto;
 import relex2023crypto.service.model.responses.CurrencySumDto;
 import relex2023crypto.service.model.responses.ResponseDto;
-import relex2023crypto.service.model.responses.SecretKeyDto;
+import relex2023crypto.service.model.SecretKeyDto;
 
 import java.util.List;
 import java.util.Optional;

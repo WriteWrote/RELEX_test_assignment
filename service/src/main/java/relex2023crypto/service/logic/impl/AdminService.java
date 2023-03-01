@@ -7,14 +7,13 @@ import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
 import relex2023crypto.db.entities.AdminEntity;
-import relex2023crypto.db.entities.UserEntity;
 import relex2023crypto.db.repositories.AdminRepository;
 import relex2023crypto.service.logic.IAdminService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.IAdminMapper;
 import relex2023crypto.service.model.AdminDto;
 import relex2023crypto.service.model.responses.ResponseDto;
-import relex2023crypto.service.model.responses.SecretKeyDto;
+import relex2023crypto.service.model.SecretKeyDto;
 
 import java.util.List;
 import java.util.Optional;

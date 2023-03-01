@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import relex2023crypto.service.logic.ITransactionService;
 import relex2023crypto.service.model.WalletDto;
+import relex2023crypto.service.model.requests.DateGapRequest;
 import relex2023crypto.service.model.requests.ExchangeRequest;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
 import relex2023crypto.service.model.responses.ResponseDto;
@@ -48,5 +49,10 @@ public class TransactionController {
     @GetMapping("/all")
     public ResponseDto<List<TransactionDto>> getAllUsersTransactionHistory(@PathVariable Integer requestingUserId){
         return transactionService.getAllTransactions(requestingUserId);
+    }
+
+    @GetMapping("/between")
+    public ResponseDto<List<TransactionDto>> getTransactionCountBetweenDates(@RequestBody DateGapRequest dto){
+        return transactionService.getTransactionsInDateGap(dto);
     }
 }

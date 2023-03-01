@@ -1,6 +1,7 @@
 package relex2023crypto.service.logic;
 
 import relex2023crypto.service.model.WalletDto;
+import relex2023crypto.service.model.requests.DateGapRequest;
 import relex2023crypto.service.model.requests.ExchangeRequest;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
 import relex2023crypto.service.model.responses.ResponseDto;
@@ -20,6 +21,5 @@ public interface ITransactionService {
 
     ResponseDto<List<TransactionDto>> getAllTransactions(Integer requestingUserId);
 
-//    ResponseDto<List<TransactionDto>> getTransactionsInDateGap();
-
+    ResponseDto<List<TransactionDto>> getTransactionsInDateGap(DateGapRequest dto);
 }

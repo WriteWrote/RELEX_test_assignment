@@ -14,6 +14,7 @@ import relex2023crypto.service.logic.ITransactionService;
 import relex2023crypto.service.logic.utils.AdminAccessProvider;
 import relex2023crypto.service.mapper.ITransactionMapper;
 import relex2023crypto.service.mapper.IWalletMapper;
+import relex2023crypto.service.model.requests.DateGapRequest;
 import relex2023crypto.service.model.requests.ExchangeRequest;
 import relex2023crypto.service.model.responses.ExchangeResponseDto;
 import relex2023crypto.service.model.responses.ResponseDto;
@@ -162,7 +163,6 @@ public class TransactionService implements ITransactionService {
         transactionRepository.save(entityFrom);
         transactionRepository.save(entityTo);
 
-        //todo: add transaction which gets transaction count from date to date
         var responseArgs = new ExchangeResponseDto(responseCashOut.getArgs()[0].getCurrencyId(),
                 responseCashOut.getArgs()[0].getSum(),
                 responseCashIn.getArgs()[0].getCurrencyId(),
@@ -204,6 +204,24 @@ public class TransactionService implements ITransactionService {
 
         return new ResponseDto<>("Operation succeeded",
                 Optional.of(transactionRepository.findAll())
+                        .map(transactionMapper::fromEntities)
+                        .orElseThrow());
+    }
+
+    @Override
+    public ResponseDto<List<TransactionDto>> getTransactionsInDateGap(DateGapRequest dto) {
+        boolean access = provider.checkAdminAccessByUserSecretKey(dto.getSecretKey());
+
+        logger.info("Requested transactions in time gap {} - {} by secret key {}, access: {}",
+                dto.getDateFrom(), dto.getDateTo(), dto.getSecretKey(), access);
+
+        if(!access){
+            return new ResponseDto<>("Operation denied due to access restrictions. " +
+                    "This operation is only available for admins");
+        }
+
+        return new ResponseDto<List<TransactionDto>>("Operation succeeded", true,
+                Optional.of(transactionRepository.findAllByDateBetween(dto.getDateFrom(), dto.getDateTo()))
                         .map(transactionMapper::fromEntities)
                         .orElseThrow());
     }

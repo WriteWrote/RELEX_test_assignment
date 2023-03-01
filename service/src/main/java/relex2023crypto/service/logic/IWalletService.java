@@ -2,7 +2,7 @@ package relex2023crypto.service.logic;
 
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.WalletDto;
-import relex2023crypto.service.model.responses.SecretKeyDto;
+import relex2023crypto.service.model.SecretKeyDto;
 
 import java.util.List;
 
