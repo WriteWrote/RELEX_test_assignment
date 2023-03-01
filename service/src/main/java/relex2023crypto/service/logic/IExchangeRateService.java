@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface IExchangeRateService {
     ExchangeRateDto getExchangeRateById(Integer first, Integer second);
+
     ResponseDto<ExchangeRateDto> createExchangeRate(ExchangeRateDto dto);
 
     ResponseDto<Integer> deleteExchangeRate(Integer requestingUser,
                                             Integer rateId);
-    List<ExchangeRateDto> getAll();
-    ResponseDto<ExchangeRateDto> modifyExchangeRateById(ExchangeRateDto dto);
 
+    List<ExchangeRateDto> getAll();
+
+    ResponseDto<ExchangeRateDto> modifyExchangeRateById(ExchangeRateDto dto);
 }

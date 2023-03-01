@@ -7,14 +7,11 @@ import relex2023crypto.db.repositories.UserRepository;
 
 @Component
 public class AdminAccessProvider {
-    //don't laugh, this is just util with one method
     private final AdminRepository adminRepository;
-    private final UserRepository userRepository;
 
     @Autowired
-    public AdminAccessProvider(AdminRepository adminRepository, UserRepository userRepository) {
+    public AdminAccessProvider(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
-        this.userRepository = userRepository;
     }
 
     public boolean checkAdminAccessByUserId(Integer id) {
