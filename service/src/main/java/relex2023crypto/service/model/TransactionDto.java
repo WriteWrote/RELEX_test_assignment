@@ -74,6 +74,7 @@ public class TransactionDto {
     public Integer getWalletId() {
         return walletId;
     }
+
     public void setWalletId(Integer walletToId) {
         this.walletId = walletToId;
     }

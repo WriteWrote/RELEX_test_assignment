@@ -1,9 +1,7 @@
 package relex2023crypto.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 

@@ -27,10 +27,6 @@ public class UserDto {
     @Email(message = "email.invalid")
     @EmailUnique
     private String email;
-
-//    @JsonProperty("secret_key")
-//    @NotBlank
-//    private String secretKey;
     @JsonProperty("wallets")
     private List<WalletDto> wallets;
 

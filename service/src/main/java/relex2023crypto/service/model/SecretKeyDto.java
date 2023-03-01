@@ -3,9 +3,6 @@ package relex2023crypto.service.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @RequiredArgsConstructor
 public class SecretKeyDto {
     @JsonProperty("secret_key")

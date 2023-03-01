@@ -13,11 +13,6 @@ public class AdminDto {
     @JsonProperty("id")
     @NotNull
     private Integer id;
-
-//    @JsonProperty("secret_key")
-//    @NotBlank
-//    private String secretKey;
-
     @JsonProperty("email")
     @EmailUnique
     @Email(message = "email.invalid")
@@ -31,14 +26,6 @@ public class AdminDto {
     public void setId(Integer id) {
         this.id = id;
     }
-
-//    public String getSecretKey() {
-//        return secretKey;
-//    }
-
-//    public void setSecretKey(String secretKey) {
-//        this.secretKey = secretKey;
-//    }
 
     public String getEmail() {
         return email;
