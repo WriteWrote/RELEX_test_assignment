@@ -89,7 +89,7 @@ public class TransactionService implements ITransactionService {
 
         walletRepository.save(walletMapper.merge(newWallet, originalWallet));
 
-        return new ResponseDto<WalletDto>("Operation succeeded", true, newWallet);
+        return new ResponseDto<>("Operation succeeded", true, newWallet);
     }
 
     @Override
@@ -211,7 +211,7 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public ResponseDto<List<TransactionDto>> getTransactionsInDateGap(DateGapRequest dto) {
+    public ResponseDto<Integer> getTransactionsInDateGap(DateGapRequest dto) {
         boolean access = provider.checkAdminAccessByUserSecretKey(dto.getSecretKey());
 
         logger.info("Requested transactions in time gap {} - {} by secret key {}, access: {}",
@@ -225,6 +225,7 @@ public class TransactionService implements ITransactionService {
         return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(transactionRepository.findAllByDateBetween(dto.getDateFrom(), dto.getDateTo()))
                         .map(transactionMapper::fromEntities)
-                        .orElseThrow());
+                        .orElseThrow()
+                        .size());
     }
 }

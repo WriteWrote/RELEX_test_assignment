@@ -57,7 +57,7 @@ public class CurrencyService implements ICurrencyService {
             return new ResponseDto<>("Operation denied  due to access restriction." +
                     "This operation is only available for admins", false);
 
-        return new ResponseDto<>("Operation succeeded",
+        return new ResponseDto<>("Operation succeeded", true,
                 Optional.of(dto)
                         .map(map::toEntity)
                         .map(rep::save)

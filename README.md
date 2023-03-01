@@ -59,38 +59,111 @@
 
 ### Пользователь:
 - создать нового пользователя
+
+<img src="_screenshots/img_4.png" width="600">
+
 - удалить пользователя
+
+<img src="_screenshots/img_1.png" width="300">
+
 - список всех
+
+<img src="_screenshots/img_2.png" width="300">
 
 ### Администратор:
 - Создание нового администратора
+
+<img src="_screenshots/img_3.png" width="600">
+
 - Удаление администратора
+
+<img src="_screenshots/img_5.png" width="300">
+
 - Список всех
+
+<img src="_screenshots/img_6.png" width="300">
 
 ### Валюта:
 - Список всех валют
+
+<img src="_screenshots/img_7.png" width="300">
+
 - Создание валюты
+
+<img src="_screenshots/img_8.png" width="300">
+
 - Удаление валюты
+
+<img src="_screenshots/img_9.png" width="300">
+
 - Сумма по валюте
+  
+<img src="_screenshots/img_10.png" width="600">
+<img src="_screenshots/img_11.png" width="600">
 
 ### Обменные коээфициенты:
 - для двух конкретных валют
+ 
+<img src="_screenshots/img_13.png" width="300">
+
 - все обменные к-ты
+
+<img src="_screenshots/img_12.png" width="600">
+
 - изменить обменный к-т
+
+<img src="_screenshots/img_14.png" width="300">
+
 - создать обменный к-т
+
+<img src="_screenshots/img_15.png" width="300">
+
 - удалить обменный к-т
+
+<img src="_screenshots/img_16.png" width="300">
 
 ### Транзакции
 - вывести валюту
+
+<img src="_screenshots/img_17.png" width="300">
+
 - внести валюту
+
+<img src="_screenshots/img_18.png" width="300">
+
 - перевести валюту с кошелька на кошелек (и обменять при этом, если нужно)
+
+<img src="_screenshots/img_19.png" width="300">
+
 - история транзакций пользователя
+
+<img src="_screenshots/img_20.png" width="300">
+
 - вся история транзакций
+
+<img src="_screenshots/img_21.png" width="300">
+
 - число транзакций в заданном промежутке времени
+
+<img src="_screenshots/img_22.png" width="300">
 
 ### Счета (кошельки)
 - все кошельки списком
+
+<img src="_screenshots/img_23.png" width="300">
+
 - все кошельки одного пользователя
+
+<img src="_screenshots/img_24.png" width="300">
+
 - конкретный кошелек
+
+<img src="_screenshots/img_25.png" width="300">
+
 - создать кошелек
+
+<img src="_screenshots/img_26.png" width="300">
+
 - удалить кошелек
+
+<img src="_screenshots/img_27.png" width="300">

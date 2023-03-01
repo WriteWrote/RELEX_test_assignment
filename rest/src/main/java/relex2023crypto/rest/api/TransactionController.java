@@ -55,7 +55,7 @@ public class TransactionController {
     }
 
     @GetMapping("/between")
-    public ResponseDto<List<TransactionDto>> getTransactionCountBetweenDates(@RequestBody DateGapRequest dto) {
+    public ResponseDto<Integer> getTransactionCountBetweenDates(@RequestBody DateGapRequest dto) {
         return transactionService.getTransactionsInDateGap(dto);
     }
 }
