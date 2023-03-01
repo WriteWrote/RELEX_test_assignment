@@ -2,7 +2,9 @@ package relex2023crypto.rest.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import relex2023crypto.service.logic.IExchangeRateService;
+
 import relex2023crypto.service.model.requests.ExchangeRateDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 

@@ -2,7 +2,9 @@ package relex2023crypto.rest.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import relex2023crypto.service.logic.IWalletService;
+
 import relex2023crypto.service.model.WalletDto;
 import relex2023crypto.service.model.responses.ResponseDto;
 import relex2023crypto.service.model.SecretKeyDto;
@@ -23,6 +25,7 @@ public class WalletController {
     public ResponseDto<List<WalletDto>> getAllWallets(@RequestBody SecretKeyDto dto) {
         return walletService.getAll(dto);
     }
+
     @GetMapping("/info")
     public ResponseDto<List<WalletDto>> getUserAllWallets(@RequestBody SecretKeyDto dto) {
         return walletService.getUserWallets(dto);
@@ -44,5 +47,4 @@ public class WalletController {
                                              @PathVariable Integer walletId) {
         return walletService.deleteWalletById(requestingUserId, walletId);
     }
-
 }
